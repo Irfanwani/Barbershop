@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    Fix Appointment Here!
+{% endblock %}
+
+{% block content %}
+    <h1>Check availability for fixing appointment with <a href="{% url 'barberapp:profile' user=brbr.username %}">{{ brbr.username }}</a></h1>
+    
+    <form action="{% url 'barberapp:appointment' barber_id=brbr.id %}" method="POST">
+        {% csrf_token %}
+        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+            {{ form }}
+            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+          </div>
+        <br>
+        <button type="submit" class="btn btn-success btn-block">Fix Appointment</button>
+    </form>
+    <br>
+<div class="card">
+  <div class="card-body">
+    <h5>NOTE:-</h5>
+    <ul>
+      <li>Please use time with 0 minutes or multiples of 15 minutes like below:</li>
+      <li>10:00 AM/PM  or   10:15 AM/PM   or  10:30 AM/PM  or 10:45 AM/PM</li>
+    </ul>
+  <h5>Don't use time as below:</h5>
+  <ul>
+    <li>10:02 AM/PM   or  10:18 AM/PM etc.</li>
+  </ul>
+  <ul>
+    <li>First format will help you to find appropriate time fast.</li>
+    <li>If it is showing some error message, change your time by 15-30 minutes.</li>
+  </ul>
+</div>
+</div>
+<hr>   
+{% endblock %}

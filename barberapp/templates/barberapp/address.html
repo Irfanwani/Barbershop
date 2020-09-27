@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    Submit your address details
+{% endblock %}
+
+{% block extra_head %}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+    <div class="card text-center">
+        <div class="card-body">
+    <br>
+        <h3>Get my current location</h3>
+        
+        <button type="button"  data-toggle="collapse" data-target="#a_n" aria-expanded="false" aria-controls="collapseExample" class="btn btn-primary" id="access_location">Access my location</button>
+        <p id="a_n" class="collapse card card-body">
+            Please check the auto filled fields below.If they are not correct, change them manually.
+        </p>
+        
+    <br>
+
+    <h5>OR do it manually.</h5>
+
+    <form action="{% url 'barberapp:address' %}" method="POST" id="address_form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <br>
+        
+        <div id="e_no"></div>
+        <br>
+        <button type="submit" class="btn btn-success">Complete registration</button>
+    </form>
+
+</div>
+</div>
+
+
+<div id="map" style="margin-left: 20px;"></div>
+
+    </div>
+
+<br>
+<script>
+    document.getElementById("id_About").classList.add("form-control");
+
+
+    document.getElementById("id_status").onchange = function() {
+          
+          var e_count = document.getElementById("e_no");
+    
+          if(e_count.innerHTML == '') {
+              
+              var input = document.createElement('input');
+              input.type = 'number';
+              input.name = 'employee_no';
+              input.min = 1;
+              input.required = true;
+              input.title = 'How many employees work under you (including you)?';
+              e_count.innerHTML += 'How many employees work under you (including you)?&ast; <br>';
+              e_count.append(input);
+              
+            }
+    else {
+        e_count.innerHTML = '';
+    }
+};
+
+
+
+//Running script only when user wants to give the access to their location
+document.querySelector("#access_location").onclick = function() {
+    
+    //check if geolocation is accessible 
+    if(navigator.geolocation) {
+
+        //Getting the coordinates of the current position
+        navigator.geolocation.getCurrentPosition(position => {
+            console.log(position);
+            var lt = position.coords.latitude;
+            var ln = position.coords.longitude;
+            
+            //Reverse geocoding for converting coordinates into human readable address 
+            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lt},${ln}&key=AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg`)
+             .then(function(response) {
+                 console.log(response);
+                 document.getElementById("id_country").value = response.results[0].address_components[6].long_name;
+                 document.getElementById("id_state").value = response.results[0].address_components[5].long_name;
+                 document.getElementById("id_city").value = response.results[0].address_components[3].long_name;
+                 document.getElementById("id_street_address").value = response.results[0].address_components[1].long_name;
+                 document.getElementById("id_pincode").value = parseInt(response.results[0].address_components[7].long_name);
+             })
+             .catch(function(error) {
+                 console.log(error);
+             });
+             
+             //changing the center and maker on the map
+             map = new google.maps.Map(document.getElementById("map"), {
+                 center: {
+                     lat: lt,
+                     lng: ln
+                    },
+                    zoom: 8
+                });
+                marker = new google.maps.Marker({
+                    position: {lat: lt, lng: ln},
+                    map: map
+            });
+            
+        })
+    }
+    else {
+        console.log("There was some problem.")
+    }
+    
+    
+
+}
+
+//Creating a map with center and marker at New York
+var map;
+var marker;
+function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: {
+            lat: 40.6968391,
+            lng: -74.2600267
+        },
+        zoom: 8
+    });
+    marker = new google.maps.Marker({
+        position: {lat: 40.6968391, lng: -74.2600267},
+        map: map
+    });
+};
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg&callback=initMap&libraries=&v=weekly"
+      defer></script>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    Change personal and address details here!
+{% endblock %}
+
+{% block content %}
+<br>
+
+<div class="text-center">
+
+<div class="card" id="update_form">
+    <div class="card-header">
+        <h3>Change your details here.</h3>
+        <h5>Click on the field which you want to update.</h5>
+    </div>
+    <div class="card-body">
+    <form class="form-group" action="{% url 'barberapp:change_details' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <img src="{{ usr.dp.url }}" alt="DP" style="height: 100px; width: 100px; border-radius: 50px;" >
+        <br>
+        <input name="DP" placeholder="DP" type="file" class="detail form-control" readonly>
+        <br>
+        <input name="cntry" type="text" placeholder="Country" value="{{ usr.country }}" class="detail form-control" readonly>
+        <br>
+        <input name="st" type="text" value="{{ usr.state }}" placeholder="State" class="detail form-control" readonly>
+        <br id="ct">
+        <input name="cty" type="text" placeholder="City" value="{{ usr.city }}" class="detail form-control" readonly>
+        <br>
+        <input name="sta" placeholder="Street Address" type="text" value="{{ usr.street_address }}" class="detail form-control" readonly>
+        <br>
+        <input name="pn" placeholder="Pincode" type="number" value="{{ usr.pincode }}" class="detail form-control" readonly>
+        <br>
+        <input name="abt" type="text" placeholder="About" value="{{ usr.About }}" class="detail form-control" readonly>
+        <br>
+        <input name="ws" type="url" placeholder="Website" value="{{ usr.website }}" class="detail form-control" readonly>
+        <br>
+        {% if br %}
+        <input name="en" type="number" placeholder="Employee Number (including you)." value="{{ usr.employee_no }}" class="detail form-control" readonly>
+        {% endif %}
+    <br>
+    
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModal">
+        Save Changes
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Save Changes</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <h3>Are you sure?</h3>
+                <small>(This action can't be reversed.)</small>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>
+
+</div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal1">
+        Delete my Account
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Account Deletion</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <h3 style="text-align: center; color: red;">Alert!</h3>
+                <h6 style="text-align: center; color: red;">(You can't reverse this action)</h6>
+                <strong>If you are logged in as a user:</strong>
+                <ul>
+                    <li>All your user details will be deleted including email, username, address details etc.</li>
+                    <li>All your appointments will be deleted.</li>
+                </ul>
+                <strong>If you are logged in as a barber:</strong>
+                <ul>
+                    <li>All your personal details will be deleted including email, username, address details etc.</li>
+                    <li>All the appointments made by other users with you will be cancelled.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form action="{% url 'barberapp:delete_account' %}" method="POST">
+                    {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Permanently Delete my account</button>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+<br>
+
+<script>
+
+document.querySelectorAll(".detail").forEach(detail => {
+    detail.onclick = () => {
+        detail.value = '';
+        detail.removeAttribute('readonly');
+        
+    };
+});
+
+</script>
+{% endblock %}

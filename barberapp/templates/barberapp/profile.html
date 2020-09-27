@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body list-group">
+        <img src="{{ usr.dp.url }}" class="shadow-lg" alt="profile picture" style="height: 10em; width: 20%; border-radius: 50%;">
+        <p><strong>Status:</strong>{{ status }}</p>
+        <p><strong>Username:</strong>{{ usr.username }}</p>
+        <p><strong>Email:</strong>{{ email }}</p>
+        <p><strong>Country:</strong>{{ usr.country }}</p>
+        <p><strong>State:</strong>{{ usr.state }}</p>
+        <p><strong>City:</strong>{{ usr.city }}</p>
+        <p><strong>Street Address:</strong>{{ usr.street_address }}</p>
+        <p><strong>Pincode:</strong>{{ usr.pincode }}</p>
+        <p><strong>About:</strong>{{ usr.About }}</p>
+        {% if usr.website %}
+            <p><strong>Website:</strong><a href="{{ usr.website }}" target="blank">{{ usr.website }}</a></p>
+        {% endif %}
+        
+        {% if br %}
+            <p><strong>Employee Number:</strong>{{ usr.employee_no }}</p>
+            <a href="{% url 'barberapp:appointment' barber_id=usr.id %}" class="btn btn-success">Fix Appointment</a>
+        {% endif %}
+    </div>
+</div>
+<br>
+
+<script>
+    document.querySelectorAll("p").forEach(p => {
+        p.classList.add('list-group-item');
+        p.style.textAlign = 'center';
+    });
+</script>
+
+
+{% endblock %}

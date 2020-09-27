@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+    Appointment details
+{% endblock %}
+
+{% block content %}
+    <h1>Here are the Appointment details.</h1>
+    {% if apnt %}
+    <table class="table table-light table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th>Barbername</th>
+                <th>Date and time</th>
+                <th>Approve</th>
+                <th>Cancel</th>
+            </tr>
+        </thead>
+    <tbody>
+    {% for ap in apnt %}
+    
+    <tr>
+        <td><a href="{% url 'barberapp:profile' user=ap.username %}">{{ ap.username }}</a></td>
+        <td><a href="{% url 'barberapp:profile' user=ap.barbername %}">{{ ap.barbername }}</a></td>
+        <td>{{ ap.datetime }}</td>
+        <td>
+          
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal{{ ap.id }}">
+                Mark as Completed
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="modal{{ ap.id }}" tabindex="-1" aria-labelledby="{{ ap.id }}Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="{{ ap.id }}Label">Save changes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Are you sure?</h3>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="{% url 'barberapp:apnt_completed' ap_id=ap.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">Mark as Completed</button>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </td>
+
+        <td>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#a_modal{{ ap.id }}">
+                Cancel Appointment
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="a_modal{{ ap.id }}" tabindex="-1" aria-labelledby="{{ ap.id }}Label1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="{{ ap.id }}Label1">Save changes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 style="color: red;">Are you sure to cancel this appointment?</h3>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="{% url 'barberapp:apnt_details' ap_id=ap.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Cancel Appointment</button>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+                        
+        </td>
+    </tr>
+
+    {% endfor %}
+</tbody>
+</table>
+    {% else %}
+        <small>No appointments fixed</small>
+    {% endif %}
+
+{% endblock %}

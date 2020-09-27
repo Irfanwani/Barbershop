@@ -1,0 +1,74 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+  <br>
+  <div class="card text-center">
+    <div class="card-header">
+    <h1>{% trans "Sign Up" %}</h1>
+    </div>
+    <div class="card-body">
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}sign up with google:{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <div class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </div>
+
+  <div class="login-or">{% trans 'or' %}</div>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}Sign up here!{% endblocktrans %}</p>
+{% endif %}
+
+
+<form class="signup form-group" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {{ form }}
+  <a href="#" id="abc">show Password</a>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <br>
+  <button type="submit" class="btn btn-primary">{% trans "Sign Up" %} &raquo;</button>
+</form>
+<br>
+
+</div>
+  <div class="card-footer">
+  <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+  </div>
+</div>
+</div>
+<br>
+
+<script>
+
+  document.getElementById("abc").onclick = () => {
+    if(document.getElementById("id_password1").type == 'password') {
+
+    document.getElementById("id_password1").type = 'text';
+    document.getElementById("id_password1").autocomplete = 'off';
+    document.getElementById("abc").innerHTML = "Hide Password";
+    } else {
+    document.getElementById("id_password1").type = 'password';
+    document.getElementById("abc").innerHTML = "Show Password";
+
+    }
+  }
+</script>
+{% endblock %}

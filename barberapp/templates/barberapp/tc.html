@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+Terms And Conditions
+{% endblock %}
+
+{% block content %}
+<h1 id="tc">Terms & Conditions:</h1>
+<ul>
+    <li>Welcome to our app and thanks for choosing us to serve you.</li>
+    <li>Here you are going to learn about our Terms & Conditions.</li>
+    <li>Our app simply uses your personal data to recognise you and your address details to give you the best experience.</li>
+    <li>By using our site you should be willing to share your personal and address details with us. </li>
+    <li>Please don't provide any fake information as it is just going to ruin your experience.</li>
+</ul>
+<h1 id="help">Help:</h1>
+<ul>
+    <li>It is really simple to use our app.Just get started by signing up <a href="/accounts/signup">Here</a>
+         or if you already have an account, login <a href="/accounts/login">Here.</a></li>
+    <li>After signing in, you will get a conformation email.Confirm your email and move forward.</li>
+    <li>Then you will be taken to address page where you have to submit your address details.</li>
+    <li>And you are done.Go to appointment page, fix some appointments and just take a rest.</li>
+</ul>
+<ul id="more">
+    <li>
+        <div class="collapse" id="read_more">
+            <div>
+                <h5>Here are some FAQ which may help you in getting started.</h5>
+                <ul>
+                    <li><strong>How to get started?</strong></li>
+                    <li>On the home page, in top right corner, there are options of signup and sign in.Click on signup if you are a new user.</li>
+                    <li><strong>How to fix an appointment?</strong></li>
+                    <li>
+                        After signing in, on the home page, in the top right corner, below the navigation bar, there is option icon.Click on that, 
+                        choose a barber by clicking on his/her username then click on "Fix appointment" button.<br>
+                        Option >> Barber >> Fix appointment.<br>
+                        After that you will be taken on another page where you can select a time for appointment.Note that you should use a valid time
+                        else it is going to show an error.
+                    </li>
+                    <li><strong>What is a valid time?</strong></li>
+                    <li>
+                        You cannot select a past time or acccurate present time.By using such times, 
+                        you will see an error showing that "You cannot fix appointment for a past time."<br>
+                        Our app keeps a 15 minute gap between two consecutive appointments.So if you are getting some error like
+                        "Sorry! You can not fix appointment for the time selected.Please change the time(Try increasing or decreasing the time by 15 to 30 minutes.).", then do the same
+                         i.e, try increasing  or decreasing the time by 15-30 minutes to get an available time.<br>
+                         Another possibility is that if you are getting an error saying
+                         "Sorry! You can not fix appointment for the time selected.Please change the time."
+                         This error is shown only when you are trying to fix an appointment at a time which is already taken.
+                         The number of people who can fix appointment at a particular time is equal to the number of employees working under the selected barber.
+                         So again the solution is changing the time by 15-30 minutes.
+                    </li>
+                    <li><strong>How to check my appointments?</strong></li>
+                    <li>Follow the given path;<br>
+                        In the top right corner;<br>
+                        username >> My appointments<br>
+                        You can do a lot of things there.You can mark the appointment as completed or cancel it.<br>
+                        By clicking on the username, you will also see a lot of options like "Change E-mail", where you can modify your email list linked with our site,<br>
+                        "Change Password" where you can change password.You will get an email where you will see a link.By clicking on that link, you can change password.<br>
+                        "Profile" where you can see and update your profile.You can also delete your account permanently there.<br>
+                        "Sign out" where you can sign out of the site.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <a id="read_more_link" data-toggle="collapse" href="#read_more" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Read more...
+        </a>
+    </li>
+
+</ul>
+
+<h1 id="TC">Privacy Policy</h1>
+<ul>
+    <li>Our app will take from you the personal data like email and some address details so that we can find the barbers around you.</li>
+    <li>Our app doesn't share it with any third party apps or companies.</li>
+    <li>Our app uses full encription of data thus giving users a full security.</li>
+    <li>For your own security, please don't share any password or any data related to your account.</li>
+</ul>
+<hr>
+
+<script>
+    var lnk = document.getElementById("read_more_link");
+    lnk.onclick = () => {
+        if(lnk.innerHTML == 'Read less') {
+            lnk.innerHTML = 'Read more...';
+        }else {
+            lnk.innerHTML = 'Read less';
+        }
+    }
+</script>
+{% endblock %}

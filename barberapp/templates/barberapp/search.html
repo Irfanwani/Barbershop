@@ -1,0 +1,120 @@
+<div id="all_barbers">
+    {{ result }}
+    {{ result1 }}
+<div>
+    {% if brbrs %}
+    {% for brbr in brbrs %}
+    <div style="display: grid; grid-template-columns: 2fr 0fr; justify-content: space-between;">
+
+    <button type="button" data-toggle="collapse" data-target="#{{ brbr.username }}" aria-expanded="false" aria-controls="collapseExample" class="btn btn-outline-success btn-block">
+        <span class="badge" style="float: left;"><a href="{% url 'barberapp:profile' user=brbr.username %}">
+            <img src="{{ brbr.dp.url }}" alt="Barber profile" style="height: 50px; width: 50px; border-radius: 50px; border: 2px solid aqua;">
+        </a></span>
+        <span style="font-size: 30px;">{{ brbr.username }}</span>
+    </button>
+    </div>
+        <div class="collapse" id="{{ brbr.username }}" style="position: absolute; z-index: 1;">
+            <ul class="barber_details card card-body overflow-auto" style="height: 20em;">
+                <li>
+                    <a href="{% url 'barberapp:appointment' barber_id=brbr.id %}" class="btn btn-success btn-block">Fix Appointment</a>
+                </li>
+                <li>Barbername: {{ brbr.username }}</li>
+                <li>Country: {{ brbr.country }}</li>
+                <li>State: {{ brbr.state }}</li>
+                <li>City: {{ brbr.city }}</li>
+                <li>Street address: {{ brbr.street_address }}</li>
+                <li>Pincode: {{ brbr.pincode }}</li>
+                <li>Employee No.: {{ brbr.employee_no }}</li>
+                <li>About: {{ brbr.About }}</li>
+                {% if brbr.website %}
+                    <li>Website: <a href="{{ brbr.website }}" target="blank">{{ brbr.website }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    <br>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+</div>
+<hr>
+<div>
+{% if bfy1 %}
+{% for brbr in bfy1 %}
+<div style="display: grid; grid-template-columns: 2fr 0fr; justify-content: space-between;">
+
+    <button type="button" data-toggle="collapse" data-target="#{{ brbr.username }}" aria-expanded="false" aria-controls="collapseExample" class="btn btn-outline-info btn-block" style="float: right;">
+        <span class="badge" style="float: left;"><a href="{% url 'barberapp:profile' user=brbr.username %}">
+            <img src="{{ brbr.dp.url }}" alt="Barber profile" style="height: 50px; width: 50px; border-radius: 50px; border: 2px solid aqua;">
+        </a></span>
+        <span style="font-size: 30px;">{{ brbr.username }}</span>
+    </button>
+</div>
+
+<div class="collapse" id="{{ brbr.username }}" style="position: absolute; z-index: 1;">
+
+<ul class="card card-body overflow-auto" style="height: 20em;">
+    <li>
+        <a href="{% url 'barberapp:appointment' barber_id=brbr.id %}" class="btn btn-success btn-block">Fix Appointment</a>
+    </li>
+    <li>Barbername: {{ brbr.username }}</li>
+    <li>Country: {{ brbr.country }}</li>
+    <li>State: {{ brbr.state }}</li>
+    <li>City: {{ brbr.city }}</li>
+    <li>Street address: {{ brbr.street_address }}</li>
+    <li>Pincode: {{ brbr.pincode }}</li>
+    <li>Employee No.: {{ brbr.employee_no }}</li>
+    <li>About: {{ brbr.About }}</li>
+    {% if brbr.website %}
+        <li>Website: <a href="{{ brbr.website }}" target="blank">{{ brbr.website }}</a></li>
+    {% endif %}
+</ul>
+</div>
+
+<br>
+{% endfor %}
+{% endif %}
+</div>
+<hr>
+<div>
+{% if bfy2 %}
+{% for brbr in bfy2 %}
+<div style="display: grid; grid-template-columns: 2fr 0fr; justify-content: space-between;">
+
+    <button type="button" data-toggle="collapse" data-target="#{{ brbr.username }}" aria-expanded="false" aria-controls="collapseExample" class="btn btn-outline-warning btn-block" style="float: right;">
+        <span class="badge" style="float: left;"><a href="{% url 'barberapp:profile' user=brbr.username %}">
+            <img src="{{ brbr.dp.url }}" alt="Barber profile" style="height: 50px; width: 50px; border-radius: 50px; border: 2px solid aqua;">
+        </a></span>
+        <span style="font-size: 30px;">{{ brbr.username }}</span>
+    </button>
+    </div>
+<div class="collapse" id="{{ brbr.username }}" style="position: absolute; z-index: 1;">
+    <ul class="card card-body overflow-auto" style="height: 20em;">
+        <li>
+            <a href="{% url 'barberapp:appointment' barber_id=brbr.id %}" class="btn btn-success btn-block">Fix Appointment</a>
+        </li>
+        <li>Barbername: {{ brbr.username }}</li>
+        <li>Country: {{ brbr.country }}</li>
+        <li>State: {{ brbr.state }}</li>
+        <li>City: {{ brbr.city }}</li>
+        <li>Street address: {{ brbr.street_address }}</li>
+        <li>Pincode: {{ brbr.pincode }}</li>
+        <li>Employee No.: {{ brbr.employee_no }}</li>
+        <li>About: {{ brbr.About }}</li>
+        {% if brbr.website %}
+            <li>Website: <a href="{{ brbr.website }}" target="blank">{{ brbr.website }}</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+<br>
+{% endfor %}
+{% endif %}
+</div>
+</div>
+
+
+<script>
+   
+    document.getElementById("container_div").classList.remove('container');
+
+</script>
