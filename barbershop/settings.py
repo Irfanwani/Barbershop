@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-import dj_database_url
-import django_heroku
+"""import dj_database_url
+import django_heroku"""
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -21,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "r7)1e=b9&p04#dzi+uq%66!_!6#y%%o^9h*_u5v6b(+*(5+g35"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['barbershop.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'barbershop.urls'
@@ -100,8 +100,8 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+"""db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)"""
 
 AUTHENTICATION_BACKENDS = [
     
@@ -113,7 +113,7 @@ AUTHENTICATION_BACKENDS = [
 
 ]
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email' 
@@ -123,11 +123,11 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 
 
-EMAIL_USE_TLS = True
+"""EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')"""
 
 
 
@@ -184,4 +184,4 @@ MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+#django_heroku.settings(locals())

@@ -11,9 +11,12 @@ class addressDetails(forms.ModelForm):
     status = forms.ChoiceField(choices=STATUS, label="Login as:")
     class Meta:
         model = userAddress
-        fields = ('dp', 'country', 'state', 'city', 'street_address', 'pincode', 'About', 'website')
+        fields = ('dp', 'latitude', 'longitude', 'address', 'About', 'website')
         widgets = {
             "About": forms.Textarea(attrs={'cols': 40, 'rows': 5}),
+        }
+        labels = {
+            "dp": '',
         }
 
 

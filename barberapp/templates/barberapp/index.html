@@ -87,10 +87,10 @@
 
 <div id="barber_locations"></div>
 
-<div style="text-align: center; justify-content: space-between;">
-    <h5><img src='https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'>: Your Position as per your address details.</h5>
-    <h5><img src="{% static 'images/placeholder.png' %}">Your current position(If you clicked on the "Access my location" button).</h5>
-    <h5><img src="{% static 'images/location.png' %}">: Barbers around you</h5>
+<div style="text-align: center; justify-content: space-between;" class="card card-body">
+    <h6><img src="{% static 'images/address.png' %}">: Your Position as per your address details.</h6>
+    <h6><img src="{% static 'images/placeholder.png' %}">Your current position(If you clicked on the "Access my location" button).</h6>
+    <h6><img src="{% static 'images/location.png' %}">: Barbers around you</h6>
 </div>
 
 
@@ -183,11 +183,8 @@
 <div hidden id="ur">
     {% for br in barbers %}
     <ul class="br_coords">
-        <li id="{{ br.country }}">{{ br.country }}</li>
-        <li id="{{ br.state }}">{{ br.state }}</li>
-        <li id="{{ br.city }}">{{ br.city }}</li>
-        <li id="{{ br.street_address }}">{{ br.street_address }}</li>
-        <li id="{{ br.pincode }}">{{ br.pincode }}</li>
+        <li id="{{ br.latitude }}">{{ br.latitude }}</li>
+        <li id="{{ br.longitude }}">{{ br.longitude }}</li>
     </ul>
     {% endfor %}
 </div>
@@ -196,7 +193,7 @@
 {% if exp_br %}
 
 <button id="exp_msg_trigger" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#exp_msg">
-    Launch demo modal
+    expiration alert
 </button>
 
 <div class="modal fade" id="exp_msg" tabindex="-1" aria-labelledby="exp_msg_title" aria-hidden="true">
@@ -307,63 +304,38 @@ document.querySelector("#a_l").onclick = () => {
 //Creating a map.
 var map;
 var marker;
-var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+var image = "{% static 'images/address.png' %}";
+var image2 = "{% static 'images/location.png' %}";
 
 
 function initMap() {
-    var usr_address = "{{ usr.street_address }} {{ usr.city }} {{ usr.state }} {{ usr.pincode }} {{ usr.country }}";
+    map = new google.maps.Map(document.getElementById("barber_locations"), {
+        center: {
+            lat: parseFloat('{{usr.latitude}}'), 
+            lng: parseFloat('{{usr.longitude}}')
+            },
 
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
-        params: {
-            address: usr_address,
-            key: "AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg"
-            }
-        })
-            .then(function(response) {
+        zoom: 8
+    });
+    marker = new google.maps.Marker({
+        position: {
+            lat: parseFloat('{{usr.latitude}}'), 
+            lng: parseFloat("{{usr.longitude}}")
+            },
 
-                var lt = response.geometry.location.lat;
-                var ln = response.geometry.location.lng;
-
-                map = new google.maps.Map(document.getElementById("barber_locations"), {
-                        center: {
-                            lat: lt,
-                            lng: ln
-                        },
-                        zoom: 8
-                    });
-                    marker = new google.maps.Marker({
-                        position: {lat: lt, lng: ln},
-                        map: map,
-                        icon: image
-                    });
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
-
+            map: map,
+            icon: image
+    });
 
     document.querySelectorAll(".br_coords").forEach(br => {
-    
-        var br_address = `${br.children[3].innerHTML} ${br.children[2].innerHTML} ${br.children[1].innerHTML} ${br.children[4].innerHTML} ${br.children[0].innerHTML}`;
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
-        params: {
-            address: br_address,
-            key: 'AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg'
-            }
-        })
-            .then(function(response) {
-
-                var lt = response.geometry.location.lat;
-                var ln = response.geometry.location.lng;
-
-                    marker = new google.maps.Marker({
-                        position: {lat: lt, lng: ln},
-                        map: map
-                    });
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+        marker = new google.maps.Marker({
+            position: {
+                lat: parseFloat(br.children[0].innerHTML),
+                lng: parseFloat(br.children[1].innerHTML)
+            },
+            map: map,
+            icon: image2
+        });
     });
 };
 

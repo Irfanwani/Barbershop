@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% load crispy_forms_tags %}
 
 {% block head_title %}
@@ -18,6 +20,9 @@
         width: 100%;
     }
 
+    #dp_add {
+        cursor: pointer;
+    }
 </style>
 {% endblock %}
 
@@ -30,8 +35,11 @@
         <h3>Get my current location</h3>
         
         <button type="button"  data-toggle="collapse" data-target="#a_n" aria-expanded="false" aria-controls="collapseExample" class="btn btn-primary" id="access_location">Access my location</button>
-        <p id="a_n" class="collapse card card-body">
-            Please check the auto filled fields below.If they are not correct, change them manually.
+        <br>
+        <small>(click the button above to fill the fields automatically!)</small>
+        <p id="a_n" class="collapse card card-body shadow-none">
+            Please check the auto filled fields below.If they are not correct, change them manually.<br>
+            (You can get your latitude and longitude from google maps.)
         </p>
         
     <br>
@@ -40,6 +48,9 @@
 
     <form action="{% url 'barberapp:address' %}" method="POST" id="address_form" enctype="multipart/form-data">
         {% csrf_token %}
+        <label for="id_dp">
+            <img id="dp_add" title="Add profile photo" alt="Add profile photo" src="{% static 'images/dp.png' %}">
+        </label>
         {{ form|crispy }}
         <br>
         
@@ -58,6 +69,9 @@
 
 <br>
 <script>
+    var dp = document.getElementById("id_dp");
+    dp.style.display = "none";
+
     document.getElementById("id_About").classList.add("form-control");
 
 
@@ -95,16 +109,15 @@ document.querySelector("#access_location").onclick = function() {
             console.log(position);
             var lt = position.coords.latitude;
             var ln = position.coords.longitude;
+
+            document.getElementById("id_latitude").value = lt;
+            document.getElementById("id_longitude").value = ln;
             
             //Reverse geocoding for converting coordinates into human readable address 
             axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lt},${ln}&key=AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg`)
              .then(function(response) {
                  console.log(response);
-                 document.getElementById("id_country").value = response.results[0].address_components[6].long_name;
-                 document.getElementById("id_state").value = response.results[0].address_components[5].long_name;
-                 document.getElementById("id_city").value = response.results[0].address_components[3].long_name;
-                 document.getElementById("id_street_address").value = response.results[0].address_components[1].long_name;
-                 document.getElementById("id_pincode").value = parseInt(response.results[0].address_components[7].long_name);
+                 document.getElementById("id_address").value = response.formatted_address;
              })
              .catch(function(error) {
                  console.log(error);

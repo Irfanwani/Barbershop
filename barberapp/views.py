@@ -50,30 +50,15 @@ def index(request):
 
             except:
                 usr = barberAddress.objects.get(username=request.user.username)
-           
-            try:
-                bfy = barberAddress.objects.filter(country=usr.country, state=usr.state, city=usr.city, street_address=usr.street_address, pincode=usr.pincode)
-                try:
-                    bfy1 = barberAddress.objects.filter(country=usr.country, state=usr.state, city=usr.city).exclude(street_address=usr.street_address, pincode=usr.pincode)
-                except:
-                    pass
-                try:
-                    bfy2 = barberAddress.objects.filter(country=usr.country, state=usr.state).exclude(city=usr.city)
-                except:
-                    pass
-            except:
-                pass
-
+        
             result = ''
-            if not bfy and not bfy1 and not bfy2:
-                result = 'No Barbers to search!'
             
             #Getting search results using AJAX
             ctx = {}
             url_parameter = request.GET.get("q")
 
             if url_parameter:
-                brbrs = barberAddress.objects.filter(Q(username__icontains=url_parameter) | Q(country__icontains=url_parameter) | Q(state__icontains=url_parameter) | Q(city__icontains=url_parameter) | Q(street_address__icontains=url_parameter) | Q(pincode__icontains=url_parameter))
+                brbrs = barberAddress.objects.filter(Q(username__icontains=url_parameter) | Q(address__icontains=url_parameter))
                 if not brbrs:
                     result = 'No results found!'
                 ctx = {
@@ -82,9 +67,6 @@ def index(request):
                 }    
             else:
                 ctx = {
-                    "brbrs": bfy,
-                    "bfy1": bfy1,
-                    "bfy2": bfy2,
                     "usr": usr,
                     "barbers": barbers,
                     "result": result,
@@ -128,13 +110,13 @@ def address(request):
             try:
                 e_no = int(request.POST["employee_no"])
                 
-                barberAddress.objects.create(dp=form.cleaned_data["dp"], country=form.cleaned_data["country"], state=form.cleaned_data["state"], city=form.cleaned_data["city"], street_address=form.cleaned_data["street_address"], pincode=int(form.cleaned_data["pincode"]), username=request.user.username, employee_no=e_no, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
+                barberAddress.objects.create(dp=form.cleaned_data["dp"], latitude=form.cleaned_data["latitude"], longitude=form.cleaned_data["longitude"], address=form.cleaned_data["address"], username=request.user.username, employee_no=e_no, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
 
                 messages.success(request, f"{request.user.username}, You logged in successfully as a barber!")
                 send_mail(subject='Login Completed', message='Login as a barber successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='irfanwani347@gmail.com', recipient_list=[f"{request.user.email}"])
                 return HttpResponseRedirect(reverse("barberapp:index"))
             except:
-                userAddress.objects.create(dp=form.cleaned_data["dp"], country=form.cleaned_data["country"], state=form.cleaned_data["state"], city=form.cleaned_data["city"], street_address=form.cleaned_data["street_address"], pincode=int(form.cleaned_data["pincode"]), username=request.user.username, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
+                userAddress.objects.create(dp=form.cleaned_data["dp"], latitude=form.cleaned_data["latitude"], longitude=form.cleaned_data["longitude"], address=form.cleaned_data["address"], username=request.user.username, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
                 
                 messages.success(request, f"{request.user.username}, You logged in successfully!")
                 send_mail(subject='Login Completed', message='Login as a user successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='irfanwani347@gmail.com', recipient_list=[f"{request.user.email}"])
@@ -240,19 +222,19 @@ def change_details(request):
                 b.dp = img
                 b.save()
 
-                barberAddress.objects.filter(username=request.user.username).update(country=request.POST["cntry"], state=request.POST["st"], city=request.POST["cty"], street_address=request.POST["sta"], pincode=request.POST["pn"], About=request.POST['abt'], website=request.POST["ws"], employee_no=request.POST["en"])
+                barberAddress.objects.filter(username=request.user.username).update(latitude=request.POST["latitude"], longitude=request.POST["longitude"], address=request.POST["address"], About=request.POST['abt'], website=request.POST["ws"], employee_no=request.POST["en"])
             else:
                 u = userAddress.objects.get(username=request.user.username)
                 u.dp = img
                 u.save()
                 
-                userAddress.objects.filter(username=request.user.username).update(country=request.POST["cntry"], state=request.POST["st"], city=request.POST["cty"], street_address=request.POST["sta"], pincode=request.POST["pn"], About=request.POST['abt'], website=request.POST["ws"])
+                userAddress.objects.filter(username=request.user.username).update(latitude=request.POST["latitude"], longitude=request.POST["longitude"], address=request.POST["address"], About=request.POST['abt'], website=request.POST["ws"])
 
         except:
             if br:
-                barberAddress.objects.filter(username=request.user.username).update(country=request.POST["cntry"], state=request.POST["st"], city=request.POST["cty"], street_address=request.POST["sta"], pincode=request.POST["pn"], About=request.POST['abt'], website=request.POST["ws"], employee_no=request.POST["en"])
+                barberAddress.objects.filter(username=request.user.username).update(latitude=request.POST["latitude"], longitude=request.POST["longitude"], address=request.POST["address"], About=request.POST['abt'], website=request.POST["ws"], employee_no=request.POST["en"])
             else:
-                userAddress.objects.filter(username=request.user.username).update(country=request.POST["cntry"], state=request.POST["st"], city=request.POST["cty"], street_address=request.POST["sta"], pincode=request.POST["pn"], About=request.POST['abt'], website=request.POST["ws"])
+                userAddress.objects.filter(username=request.user.username).update(latitude=request.POST["latitude"], longitude=request.POST["longitude"], address=request.POST["address"], About=request.POST['abt'], website=request.POST["ws"])
 
         messages.success(request, "Profile updated successfully!")
         send_mail('Profile updated successfully!', 'Your profile was updated successfully! Go to our website to check the changes.', 'irfanwani347@gmail.com', [f'{request.user.email}'])

@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block head_title %}
     Change personal and address details here!
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    #dp_label:hover {
+        cursor: pointer;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -15,22 +24,20 @@
         <h3>Change your details here.</h3>
         <h5>Click on the field which you want to update.</h5>
     </div>
+    <button class="btn btn-primary" type="button" id="access_my_location" style="float: left;">Use my current location</button>
     <div class="card-body">
     <form class="form-group" action="{% url 'barberapp:change_details' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <img src="{{ usr.dp.url }}" alt="DP" style="height: 100px; width: 100px; border-radius: 50px;" >
+            <label for="dp_change">
+                <img title="Change Profile Photo" id="dp_label" src="{{ usr.dp.url }}" alt="DP" style="height: 150px; width: 150px; border-radius: 50%;" >
+            </label>
+            <input style="display: none;" id="dp_change" name="DP" type="file" class="detail form-control" readonly>
         <br>
-        <input name="DP" placeholder="DP" type="file" class="detail form-control" readonly>
+        <input id="updated_latitude" name="latitude" type="number" step="any" placeholder="Latitude" value="{{ usr.latitude }}" class="detail form-control" readonly>
         <br>
-        <input name="cntry" type="text" placeholder="Country" value="{{ usr.country }}" class="detail form-control" readonly>
-        <br>
-        <input name="st" type="text" value="{{ usr.state }}" placeholder="State" class="detail form-control" readonly>
+        <input id="updated_longitude" name="longitude" type="number" step="any" value="{{ usr.longitude }}" placeholder="Longitude" class="detail form-control" readonly>
         <br id="ct">
-        <input name="cty" type="text" placeholder="City" value="{{ usr.city }}" class="detail form-control" readonly>
-        <br>
-        <input name="sta" placeholder="Street Address" type="text" value="{{ usr.street_address }}" class="detail form-control" readonly>
-        <br>
-        <input name="pn" placeholder="Pincode" type="number" value="{{ usr.pincode }}" class="detail form-control" readonly>
+        <input name="address" placeholder="Address" type="text" value="{{ usr.address }}" class="detail form-control" readonly>
         <br>
         <input name="abt" type="text" placeholder="About" value="{{ usr.About }}" class="detail form-control" readonly>
         <br>
@@ -58,7 +65,6 @@
             </div>
             <div class="modal-body">
                 <h3>Are you sure?</h3>
-                <small>(This action can't be reversed.)</small>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -120,11 +126,20 @@
 
 document.querySelectorAll(".detail").forEach(detail => {
     detail.onclick = () => {
-        detail.value = '';
         detail.removeAttribute('readonly');
-        
     };
 });
 
+
+document.getElementById("access_my_location").onclick = () => {
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            document.getElementById("updated_latitude").value = position.coords.latitude;
+            document.getElementById("updated_longitude").value = position.coords.longitude;
+        })
+    }else {
+        console.log("error")
+    }
+}
 </script>
 {% endblock %}
