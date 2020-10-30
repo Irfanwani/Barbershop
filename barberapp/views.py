@@ -56,7 +56,6 @@ def index(request):
             #Getting search results using AJAX
             ctx = {}
             url_parameter = request.GET.get("q")
-
             if url_parameter:
                 brbrs = barberAddress.objects.filter(Q(username__icontains=url_parameter) | Q(address__icontains=url_parameter))
                 if not brbrs:
@@ -67,6 +66,7 @@ def index(request):
                 }    
             else:
                 ctx = {
+                    "brbrs": barbers,
                     "usr": usr,
                     "barbers": barbers,
                     "result": result,

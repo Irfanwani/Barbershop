@@ -1,6 +1,4 @@
 <div id="all_barbers">
-    {{ result }}
-    {{ result1 }}
 <div>
     {% if brbrs %}
     {% for brbr in brbrs %}
@@ -30,6 +28,7 @@
     <br>
     {% endfor %}
     {% else %}
+    <p>{{ result }}</p>
     {% endif %}
 </div>
 </div>
