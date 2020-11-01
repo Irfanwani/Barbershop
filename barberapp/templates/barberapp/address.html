@@ -49,7 +49,7 @@
     <form action="{% url 'barberapp:address' %}" method="POST" id="address_form" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="id_dp">
-            <img id="dp_add" title="Add profile photo" alt="Add profile photo" src="{% static 'images/dp.png' %}">
+            <img id="dp_add" title="Add profile photo" alt="Add profile photo" src="{% static 'images/dp.png' %}" style="height: 150px; width: 150px;">
         </label>
         {{ form|crispy }}
         <br>
@@ -69,6 +69,24 @@
 
 <br>
 <script>
+    //Preview of the photo selected
+    document.getElementById("id_dp").addEventListener("change", function() {
+        const file = this.files[0];
+        const dp_label = document.getElementById("dp_add");
+        if(file) {
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function() {
+                dp_label.setAttribute("src", this.result);
+            })
+            reader.readAsDataURL(file);
+        }else {
+            dp_label.setAttribute("src", "{% static 'images/dp.png' %}")
+        }
+    });
+
+
+    //Changing the address form
     var dp = document.getElementById("id_dp");
     dp.style.display = "none";
 
