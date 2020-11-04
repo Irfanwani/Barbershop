@@ -16,6 +16,8 @@
                 <li>
                     <a href="{% url 'barberapp:appointment' barber_id=brbr.id %}" class="btn btn-success btn-block">Fix Appointment</a>
                 </li>
+                <li>{{ brbr.latitude }}</li>
+                <li>{{ brbr.longitude }}</li>
                 <li>Barbername: {{ brbr.username }}</li>
                 <li>address: {{ brbr.address }}</li>
                 <li>Employee No.: {{ brbr.employee_no }}</li>
@@ -35,4 +37,12 @@
 
 <script>
     document.getElementById("container_div").classList.remove('container');
+
+    document.querySelectorAll("ul").forEach(ul => {
+        ul.classList.add("list-group");
+    });
+
+    document.querySelectorAll("li").forEach(li => {
+        li.classList.add('list-group-item');
+    });
 </script>

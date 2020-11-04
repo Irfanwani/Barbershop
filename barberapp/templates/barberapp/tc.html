@@ -28,7 +28,13 @@ Terms And Conditions
                 <h5>Here are some FAQ which may help you in getting started.</h5>
                 <ul>
                     <li><strong>How to get started?</strong></li>
-                    <li>On the home page, in top right corner, there are options of signup and sign in.Click on signup if you are a new user.</li>
+                    <li>On the home page, in top right corner, there are options of signup and sign in.Click on signup if you are a new user.<br>
+                        After signing in you will be redirected to a page where you need to submit your address details.<br>
+                        There you need to provide your address, some details about your self, whether you are signing as a user or a barber
+                        and most important you need to submit your coordinates(latitude and longitude) which you may not be knowing.<br>
+                        To make this process easier, we have added a button, labelled as 'Access my location', on the top of the form where you have to submit your address details
+                        which on click auto-fills latitude, longitude and address fields.  
+                    </li>
                     <li><strong>How to fix an appointment?</strong></li>
                     <li>
                         After signing in, on the home page, in the top right corner, below the navigation bar, there is option icon.Click on that, 
@@ -89,5 +95,13 @@ Terms And Conditions
             lnk.innerHTML = 'Read less';
         }
     }
+
+    document.querySelectorAll("ul").forEach(ul => {
+        ul.classList.add("list-group");
+    });
+
+    document.querySelectorAll("li").forEach(li => {
+        li.classList.add('list-group-item');
+    });
 </script>
 {% endblock %}

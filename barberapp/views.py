@@ -50,9 +50,9 @@ def index(request):
 
             except:
                 usr = barberAddress.objects.get(username=request.user.username)
-        
-            result = ''
-            
+
+            result = 'No barbers around you! Try Searching for some barbers'
+                 
             #Getting search results using AJAX
             ctx = {}
             url_parameter = request.GET.get("q")

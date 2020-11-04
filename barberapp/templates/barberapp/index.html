@@ -317,7 +317,7 @@ function initMap() {
             lng: parseFloat('{{usr.longitude}}')
             },
 
-        zoom: 8
+        zoom: 10
     });
     marker = new google.maps.Marker({
         position: {
@@ -343,32 +343,13 @@ function initMap() {
           var pr = document.createElement("div");
           pr.innerHTML = `${br.children[2].innerHTML} located at ${br.children[3].innerHTML}`;
           map.setCenter(this.getPosition());
-          map.setZoom(10);
+          map.setZoom(14);
           setTimeout(() => {  
             alert(pr.innerHTML);
           }, 500);
         });
     });
 };
-
-
-//getting distance between user and different barbers
-/*document.querySelectorAll(".br_coords").forEach(br => {
-    axios.get("https://maps.googleapis.com/maps/api/distancematrix/json",{
-        params: {
-            origins: {lat: "{{ usr.latitude }}", lng: "{{ usr.longitude }}"},
-            destinations: {lat: parseFloat(br.children[0].innerHTML),
-                        lng: parseFloat(br.children[1].innerHTML)},
-            key: 'AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg'
-        }
-    })
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.log(error);
-    })
-    })*/
 
 </script>
 
