@@ -10,7 +10,8 @@ from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, send_mass_mail
 from django.template.loader import render_to_string
-from django.db.models import Q
+from django.db.models import Q, F
+from geopy.distance import geodesic 
 
 
 # Create your views here.
@@ -47,12 +48,21 @@ def index(request):
             #Getting nearby barbers.
             try:
                 usr = userAddress.objects.get(username=request.user.username)
-
             except:
                 usr = barberAddress.objects.get(username=request.user.username)
 
+            try:
+                origin = (usr.latitude, usr.longitude)
+                brbrs = barberAddress.objects.annotate(distance=F('latitude') + F('longitude')).order_by('distance')
+                distance = {}
+                for b in brbrs:
+                    dest = (b.latitude, b.longitude)
+                    distance[b.username] = f'{round(geodesic(origin, dest).kilometers, 2)} Km'
+                print(distance)
+            except:
+                pass
             result = 'No barbers around you! Try Searching for some barbers'
-                 
+
             #Getting search results using AJAX
             ctx = {}
             url_parameter = request.GET.get("q")
@@ -61,12 +71,14 @@ def index(request):
                 if not brbrs:
                     result = 'No results found!'
                 ctx = {
+                    "distance": distance,
                     "brbrs": brbrs,
                     'result': result
                 }    
             else:
                 ctx = {
-                    "brbrs": barbers,
+                    "distance": distance,
+                    "brbrs": brbrs,
                     "usr": usr,
                     "barbers": barbers,
                     "result": result,
@@ -85,7 +97,8 @@ def index(request):
 
             return render(request, "barberapp/index.html", context=ctx)
         except:
-            return render(request, "barberapp/index.html", {"result": f'Please Provide your address details to check barbers around you. In the top right corner goto: {request.user.username} >> Profile and submit your address details there!'})
+            result = f'Please Provide your address details to check barbers around you. In the top right corner goto: {request.user.username} >> Profile and submit your address details there!'
+            return render(request, "barberapp/index.html", {"result": result})
 
     return render(request, "barberapp/index.html")
 

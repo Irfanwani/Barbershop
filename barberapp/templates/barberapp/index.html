@@ -64,7 +64,7 @@
 
                 <div style="display: inline-flex; align-items: center;">
                 <i id="search-icon" class="fas fa-search" style="margin-left: 3px;"></i>
-                <input type="text" title="search by name or address of barber" id="user-input" placeholder="Search here..." style="border: none; border-radius: 20px;">
+                <input type="text" title="search by name or address of barber all around the world!" id="user-input" placeholder="Search here..." style="border: none; border-radius: 20px;">
                 </div>
             </div>
 
@@ -187,6 +187,12 @@
         <li id="{{ br.longitude }}">{{ br.longitude }}</li>
         <li id="{{ br.username }}">{{ br.username }}</li>
         <li id="{{ br.address }}">{{ br.address }}</li>
+        {% for key, value in distance.items %}
+            {% if key == br.username %}
+                <li><strong>Distance from you:</strong> {{ value }}</li>
+            {% endif %}
+        {% endfor %}
+        <li>{{ br.id }}</li>
     </ul>
     {% endfor %}
 </div>
@@ -278,7 +284,13 @@ var image1 = "{% static 'images/placeholder.png' %}";
 //Getting position of user and barbers and showing that on the map.
 document.querySelector("#a_l").onclick = () => {
     if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
+        marker = new google.maps.Marker({
+            map: map,
+            icon: image1,
+            title: 'Your current location'
+        });
+        navigator.geolocation.watchPosition(position => {
+            console.log(position);
             var lt = position.coords.latitude;
             var ln = position.coords.longitude;
 
@@ -287,14 +299,15 @@ document.querySelector("#a_l").onclick = () => {
                 lng: ln
             });
         
-        marker = new google.maps.Marker({
-            position: {lat: lt, lng: ln},
-            map: map,
-            icon: image1
+            marker.setPosition({
+                lat: lt,
+                lng: ln
+            });
+        },
+        error => console.log(error),
+        {
+            enableHighAccuracy: true
         });
-        
-        });
-
     }
     else {
         document.getElementById("barber_locations").innerHTML = "There was some error.Please check if you allowed this site to access your location."; 
@@ -326,7 +339,8 @@ function initMap() {
             },
 
             map: map,
-            icon: image
+            icon: image,
+            title: 'Your saved location'
     });
 
     document.querySelectorAll(".br_coords").forEach(br => {
@@ -338,15 +352,18 @@ function initMap() {
             map: map,
             icon: image2,
             title: `${br.children[2].innerHTML} located at ${br.children[3].innerHTML}`
+        });        
+        const infowindow = new google.maps.InfoWindow({
+          content: `<a href="/appointment/${br.children[5].innerHTML}" class="btn btn-success btn-block">Fix Appointment</a>`+
+          `<strong>${br.children[2].innerHTML}</strong><br>`+
+          `<strong>Located at:</strong> ${br.children[3].innerHTML}<br>`+
+          `${br.children[4].innerHTML}<br>`
         });
+
         marker.addListener("click", function() {
-          var pr = document.createElement("div");
-          pr.innerHTML = `${br.children[2].innerHTML} located at ${br.children[3].innerHTML}`;
           map.setCenter(this.getPosition());
-          map.setZoom(14);
-          setTimeout(() => {  
-            alert(pr.innerHTML);
-          }, 500);
+          map.setZoom(12);
+          infowindow.open(map, this);
         });
     });
 };

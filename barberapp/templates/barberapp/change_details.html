@@ -7,6 +7,11 @@
 {% endblock %}
 
 {% block extra_head %}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
 <style>
     #dp_label:hover {
         cursor: pointer;
@@ -33,11 +38,11 @@
             </label>
             <input style="display: none;" id="dp_change" name="DP" type="file" accept="image/*" class="detail form-control" readonly>
         <br>
-        <input id="updated_latitude" name="latitude" type="number" step="any" placeholder="Latitude" value="{{ usr.latitude }}" class="detail form-control" readonly>
+        <input min="-90" max="90" id="updated_latitude" name="latitude" type="number" step="any" placeholder="Latitude" value="{{ usr.latitude }}" class="detail form-control" readonly>
         <br>
-        <input id="updated_longitude" name="longitude" type="number" step="any" value="{{ usr.longitude }}" placeholder="Longitude" class="detail form-control" readonly>
+        <input min="-180" max="180" id="updated_longitude" name="longitude" type="number" step="any" value="{{ usr.longitude }}" placeholder="Longitude" class="detail form-control" readonly>
         <br id="ct">
-        <input name="address" placeholder="Address" type="text" value="{{ usr.address }}" class="detail form-control" readonly>
+        <input id="updated_address" name="address" placeholder="Address" type="text" value="{{ usr.address }}" class="detail form-control" readonly>
         <br>
         <input name="abt" type="text" placeholder="About" value="{{ usr.About }}" class="detail form-control" readonly>
         <br>
@@ -152,8 +157,20 @@ document.querySelectorAll(".detail").forEach(detail => {
 document.getElementById("access_my_location").onclick = () => {
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
-            document.getElementById("updated_latitude").value = position.coords.latitude;
-            document.getElementById("updated_longitude").value = position.coords.longitude;
+            var lt = position.coords.latitude;
+            var ln = position.coords.longitude;
+
+            document.getElementById("updated_latitude").value = lt;
+            document.getElementById("updated_longitude").value = ln;
+            
+            //Reverse geocoding for converting coordinates into human readable address 
+            axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${lt}+${ln}&key=1b7da3b39f234fdcb3812a908a4dda8f`)
+             .then(function(response) {
+                 document.getElementById("updated_address").value = response.data.results[0].formatted;
+             })
+             .catch(function(error) {
+                 console.log(error);
+             });
         })
     }else {
         console.log("error")

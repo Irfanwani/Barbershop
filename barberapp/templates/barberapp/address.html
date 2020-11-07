@@ -69,6 +69,13 @@
 
 <br>
 <script>
+    //setting the max and min for latitude and longtiude
+    document.getElementById("id_latitude").setAttribute('max', '90');
+    document.getElementById("id_latitude").setAttribute('min', '-90');
+    document.getElementById("id_longitude").setAttribute('max', '180');
+    document.getElementById("id_longitude").setAttribute('min', '-180');
+
+
     //Preview of the photo selected
     document.getElementById("id_dp").addEventListener("change", function() {
         const file = this.files[0];
@@ -124,7 +131,6 @@ document.querySelector("#access_location").onclick = function() {
 
         //Getting the coordinates of the current position
         navigator.geolocation.getCurrentPosition(position => {
-            console.log(position);
             var lt = position.coords.latitude;
             var ln = position.coords.longitude;
 
@@ -132,10 +138,9 @@ document.querySelector("#access_location").onclick = function() {
             document.getElementById("id_longitude").value = ln;
             
             //Reverse geocoding for converting coordinates into human readable address 
-            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lt},${ln}&key=AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg`)
+            axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${lt}+${ln}&key=1b7da3b39f234fdcb3812a908a4dda8f`)
              .then(function(response) {
-                 console.log(response);
-                 document.getElementById("id_address").value = response.formatted_address;
+                 document.getElementById("id_address").value = response.data.results[0].formatted;
              })
              .catch(function(error) {
                  console.log(error);

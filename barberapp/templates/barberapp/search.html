@@ -16,9 +16,12 @@
                 <li>
                     <a href="{% url 'barberapp:appointment' barber_id=brbr.id %}" class="btn btn-success btn-block">Fix Appointment</a>
                 </li>
-                <li>{{ brbr.latitude }}</li>
-                <li>{{ brbr.longitude }}</li>
                 <li>Barbername: {{ brbr.username }}</li>
+                {% for key, value in distance.items %}
+                    {% if key == brbr.username %}
+                        <li>Distance from you: {{ value }}</li>
+                    {% endif %}
+                {% endfor %}
                 <li>address: {{ brbr.address }}</li>
                 <li>Employee No.: {{ brbr.employee_no }}</li>
                 <li>About: {{ brbr.About }}</li>
