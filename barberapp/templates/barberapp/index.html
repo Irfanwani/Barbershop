@@ -79,20 +79,24 @@
             </div>
         </div>
     </div>
-
-<div style="text-align: center;" class="container">
-<button id="a_l" class="btn btn-outline-success btn-block">Access my location</button>
+    
+    <div style="text-align: center;" class="container">
+        <button id="a_l" class="btn btn-outline-success btn-block">Access my location</button>
 </div>
 <br>
 
+<div class="dropdown">
+    <button title="Help" style="float: right; border-radius: 50%" class="btn btn-primary" type="button" id="help-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      &quest;
+    </button>
+    <div class="dropdown-menu" aria-labelledby="help-btn">
+        <h6 class="dropdown-item"><img src="{% static 'images/address.png' %}">: Your Position as per your address details.</h6>
+        <h6 class="dropdown-item"><img src="{% static 'images/placeholder.png' %}">: Your current position(If you clicked on the "Access my location" button).</h6>
+        <h6 class="dropdown-item"><img src="{% static 'images/location.png' %}">: Barbers around you</h6>
+    </div>
+  </div>
+
 <div id="barber_locations"></div>
-
-<div style="text-align: center; justify-content: space-between;" class="card card-body">
-    <h6><img src="{% static 'images/address.png' %}">: Your Position as per your address details.</h6>
-    <h6><img src="{% static 'images/placeholder.png' %}">Your current position(If you clicked on the "Access my location" button).</h6>
-    <h6><img src="{% static 'images/location.png' %}">: Barbers around you</h6>
-</div>
-
 
 {% else %}
 <header>
@@ -290,7 +294,6 @@ document.querySelector("#a_l").onclick = () => {
             title: 'Your current location'
         });
         navigator.geolocation.watchPosition(position => {
-            console.log(position);
             var lt = position.coords.latitude;
             var ln = position.coords.longitude;
 

@@ -7,18 +7,18 @@
 {% block content %}
 <div class="card">
     <div class="card-body list-group">
-        <img src="{{ usr.dp.url }}" class="shadow-lg" alt="profile picture" style="height: 10em; width: 20%; border-radius: 50%;">
-        <p><strong>Status:</strong>{{ status }}</p>
-        <p><strong>Username:</strong>{{ usr.username }}</p>
-        <p><strong>Email:</strong>{{ email }}</p>
-        <p><strong>Address:</strong>{{ usr.address }}</p>
-        <p><strong>About:</strong>{{ usr.About }}</p>
+        <img src="{{ usr.dp.url }}" alt="profile picture" style="height: 150px; width: 150px; border-radius: 50%; margin-left: 5px;">
+        <p><strong>Status: </strong>{{ status }}</p>
+        <p><strong>Username: </strong>{{ usr.username }}</p>
+        <p><strong>Email: </strong>{{ email }}</p>
+        <p><strong>Address: </strong>{{ usr.address }}</p>
+        <p><strong>About: </strong>{{ usr.About }}</p>
         {% if usr.website %}
-            <p><strong>Website:</strong><a href="{{ usr.website }}" target="blank">{{ usr.website }}</a></p>
+            <p><strong>Website: </strong><a href="{{ usr.website }}" target="blank">{{ usr.website }}</a></p>
         {% endif %}
         
         {% if br %}
-            <p><strong>Employee Number:</strong>{{ usr.employee_no }}</p>
+            <p><strong>Employee Number: </strong>{{ usr.employee_no }}</p>
             <a href="{% url 'barberapp:appointment' barber_id=usr.id %}" class="btn btn-success">Fix Appointment</a>
         {% endif %}
     </div>

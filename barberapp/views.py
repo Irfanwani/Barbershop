@@ -58,7 +58,6 @@ def index(request):
                 for b in brbrs:
                     dest = (b.latitude, b.longitude)
                     distance[b.username] = f'{round(geodesic(origin, dest).kilometers, 2)} Km'
-                print(distance)
             except:
                 pass
             result = 'No barbers around you! Try Searching for some barbers'
