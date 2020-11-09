@@ -52,12 +52,17 @@ def index(request):
                 usr = barberAddress.objects.get(username=request.user.username)
 
             try:
+                # Sorting barbers as per distance 
+                brbrs = []
                 origin = (usr.latitude, usr.longitude)
-                brbrs = barberAddress.objects.annotate(distance=F('latitude') + F('longitude')).order_by('distance')
                 distance = {}
-                for b in brbrs:
+                for b in barbers:
                     dest = (b.latitude, b.longitude)
-                    distance[b.username] = f'{round(geodesic(origin, dest).kilometers, 2)} Km'
+                    distance[b.username] = round(geodesic(origin, dest).kilometers, 2)
+                sorted_distance = sorted(distance.items(), key=lambda x: x[1])
+                for i in range(len(sorted_distance)):
+                    brbrs.append(barberAddress.objects.get(username=sorted_distance[i][0]))
+            
             except:
                 pass
             result = 'No barbers around you! Try Searching for some barbers'

@@ -13,7 +13,7 @@
 
 <style>
     #barber_locations {
-        height: 30em;
+        height: 100vh;
         width: 100%;
     }
 
@@ -81,7 +81,7 @@
     </div>
     
     <div style="text-align: center;" class="container">
-        <button id="a_l" class="btn btn-outline-success btn-block">Access my location</button>
+        <button id="a_l" class="btn btn-lg btn-outline-success btn-block">Access my location</button>
 </div>
 <br>
 
@@ -193,7 +193,7 @@
         <li id="{{ br.address }}">{{ br.address }}</li>
         {% for key, value in distance.items %}
             {% if key == br.username %}
-                <li><strong>Distance from you:</strong> {{ value }}</li>
+                <li><strong>Distance from you:</strong> {{ value }} Km</li>
             {% endif %}
         {% endfor %}
         <li>{{ br.id }}</li>
@@ -291,7 +291,8 @@ document.querySelector("#a_l").onclick = () => {
         marker = new google.maps.Marker({
             map: map,
             icon: image1,
-            title: 'Your current location'
+            title: 'Your current location',
+            animation: google.maps.Animation.DROP,
         });
         navigator.geolocation.watchPosition(position => {
             var lt = position.coords.latitude;
@@ -333,7 +334,14 @@ function initMap() {
             lng: parseFloat('{{usr.longitude}}')
             },
 
-        zoom: 10
+        zoom: 10,
+        disableDefaultUI: true,
+        zoomControl: true,
+        mapTypeControl: true,
+        scaleControl: true,
+        streetViewControl: true,
+        rotateControl: true,
+        fullscreenControl: true
     });
     marker = new google.maps.Marker({
         position: {
