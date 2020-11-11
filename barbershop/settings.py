@@ -113,8 +113,6 @@ AUTHENTICATION_BACKENDS = [
 
 ]
 
-EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
-
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email' 
 ACCOUNT_EMAIL_REQUIRED = True
@@ -122,12 +120,12 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory' 
 
 
-
-"""EMAIL_USE_TLS = True
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')"""
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = os.getenv('HOST_EMAIL')
+EMAIL_HOST_PASSWORD = os.getenv('HOST_PASSWORD')
 
 
 

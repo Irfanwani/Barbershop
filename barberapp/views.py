@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, send_mass_mail
 from django.template.loader import render_to_string
-from django.db.models import Q, F
+from django.db.models import Q
 from geopy.distance import geodesic 
 
 
