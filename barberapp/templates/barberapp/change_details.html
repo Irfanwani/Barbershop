@@ -38,18 +38,18 @@
             </label>
             <input style="display: none;" id="dp_change" name="DP" type="file" accept="image/*" class="detail form-control" readonly>
         <br>
-        <input min="-90" max="90" id="updated_latitude" name="latitude" type="number" step="any" placeholder="Latitude" value="{{ usr.latitude }}" class="detail form-control" readonly>
+        <input title="Latitude" min="-90" max="90" id="updated_latitude" name="latitude" type="number" step="any" placeholder="Latitude" value="{{ usr.latitude }}" class="detail form-control" readonly>
         <br>
-        <input min="-180" max="180" id="updated_longitude" name="longitude" type="number" step="any" value="{{ usr.longitude }}" placeholder="Longitude" class="detail form-control" readonly>
+        <input title="Longitude" min="-180" max="180" id="updated_longitude" name="longitude" type="number" step="any" value="{{ usr.longitude }}" placeholder="Longitude" class="detail form-control" readonly>
         <br id="ct">
-        <input id="updated_address" name="address" placeholder="Address" type="text" value="{{ usr.address }}" class="detail form-control" readonly>
+        <input title="Address" id="updated_address" name="address" placeholder="Address" type="text" value="{{ usr.address }}" class="detail form-control" readonly>
         <br>
-        <input name="abt" type="text" placeholder="About" value="{{ usr.About }}" class="detail form-control" readonly>
+        <input title="About" name="abt" type="text" placeholder="About" value="{{ usr.About }}" class="detail form-control" readonly>
         <br>
-        <input name="ws" type="url" placeholder="Website" value="{{ usr.website }}" class="detail form-control" readonly>
+        <input title="Website" name="ws" type="url" placeholder="Website" value="{{ usr.website }}" class="detail form-control" readonly>
         <br>
         {% if br %}
-        <input name="en" type="number" placeholder="Employee Number (including you)." value="{{ usr.employee_no }}" class="detail form-control" readonly>
+        <input title="Barber Number" name="en" type="number" placeholder="Barber Number (including you)." value="{{ usr.employee_no }}" class="detail form-control" readonly>
         {% endif %}
     <br>
     

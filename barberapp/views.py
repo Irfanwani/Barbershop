@@ -30,7 +30,7 @@ def index(request):
 
             except:
                 usr1 = barberAddress.objects.get(username=request.user.username)
-                apnt = appointmentDetails.objects.filter(barbername=request.user.username)
+                apnt = appointmentDetails.objects.filter(Q(barbername=request.user.username) | Q(username=request.user.username))
 
             now = datetime.now()
             t1 = now.strftime("%d/%m/%Y, %H:%M:%S")
@@ -129,14 +129,14 @@ def address(request):
                 
                 barberAddress.objects.create(dp=form.cleaned_data["dp"], latitude=form.cleaned_data["latitude"], longitude=form.cleaned_data["longitude"], address=form.cleaned_data["address"], username=request.user.username, employee_no=e_no, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
 
-                messages.success(request, f"{request.user.username}, You logged in successfully as a barber!")
                 send_mail(subject='Login Completed', message='Login as a barber successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='barbershopservices@gmail.com', recipient_list=[f"{request.user.email}"])
+                messages.success(request, f"{request.user.username}, You logged in successfully as a barber!")
                 return HttpResponseRedirect(reverse("barberapp:index"))
             except:
                 userAddress.objects.create(dp=form.cleaned_data["dp"], latitude=form.cleaned_data["latitude"], longitude=form.cleaned_data["longitude"], address=form.cleaned_data["address"], username=request.user.username, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
                 
-                messages.success(request, f"{request.user.username}, You logged in successfully!")
                 send_mail(subject='Login Completed', message='Login as a user successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='barbershopservices@gmail.com', recipient_list=[f"{request.user.email}"])
+                messages.success(request, f"{request.user.username}, You logged in successfully!")
                 return HttpResponseRedirect(reverse("barberapp:index"))
         
         messages.warning(request, "Please check your details.There is some error.")
@@ -197,13 +197,13 @@ def appointment(request, barber_id):
                         return render(request, "barberapp/appointment.html", context)
                     else:
                         appointmentDetails.objects.create(barbername=brbr.username, username=request.user.username, datetime=form.cleaned_data["datetime"])
-                        messages.success(request, "Appointment fixed successfully!")
                         send_mass_mail((msg1, msg2), fail_silently=False)
+                        messages.success(request, "Appointment fixed successfully!")
                         return HttpResponseRedirect(reverse("barberapp:index"))
                 except:
                         appointmentDetails.objects.create(barbername=brbr.username, username=request.user.username, datetime=form.cleaned_data["datetime"])
-                        messages.success(request, "Appointment fixed successfully!")
                         send_mass_mail((msg1, msg2), fail_silently=False)
+                        messages.success(request, "Appointment fixed successfully!")
                         return HttpResponseRedirect(reverse("barberapp:index"))
                 
             messages.warning(request, "You can't fix appointment for a past time.Please change the time.")
@@ -253,8 +253,8 @@ def change_details(request):
             else:
                 userAddress.objects.filter(username=request.user.username).update(latitude=request.POST["latitude"], longitude=request.POST["longitude"], address=request.POST["address"], About=request.POST['abt'], website=request.POST["ws"])
 
-        messages.success(request, "Profile updated successfully!")
         send_mail('Profile updated successfully!', 'Your profile was updated successfully! Go to our website to check the changes.', 'barbershopservices@gmail.com', [f'{request.user.email}'])
+        messages.success(request, "Profile updated successfully!")
         return HttpResponseRedirect(reverse("barberapp:index"))
         
     return render(request, "barberapp/change_details.html", {"usr": usr, "br": br})
@@ -271,7 +271,7 @@ def delete_account(request):
         return HttpResponseRedirect(reverse("barberapp:index"))
     except:
         barberAddress.objects.get(username=request.user.username).delete()
-        appointmentDetails.objects.filter(barbername=request.user.username).delete()
+        appointmentDetails.objects.filter(Q(barbername=request.user.username) | Q(username=request.user.username)).delete()
         messages.success(request, "Your barber account was deleted successfully.Thanks for spending time with us!")
         return HttpResponseRedirect(reverse("barberapp:index"))
     
@@ -287,7 +287,8 @@ def apnt_details(request, ap_id):
 
         except:
             usr = barberAddress.objects.get(username=request.user.username)
-            apnt = appointmentDetails.objects.filter(barbername=request.user.username)
+            apnt = appointmentDetails.objects.filter(Q(barbername=request.user.username) | Q(username=request.user.username))
+            
 
         if request.method == "POST":
             ap = appointmentDetails.objects.get(id=ap_id)
