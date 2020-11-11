@@ -130,13 +130,13 @@ def address(request):
                 barberAddress.objects.create(dp=form.cleaned_data["dp"], latitude=form.cleaned_data["latitude"], longitude=form.cleaned_data["longitude"], address=form.cleaned_data["address"], username=request.user.username, employee_no=e_no, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
 
                 messages.success(request, f"{request.user.username}, You logged in successfully as a barber!")
-                send_mail(subject='Login Completed', message='Login as a barber successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='irfanwani347@gmail.com', recipient_list=[f"{request.user.email}"])
+                send_mail(subject='Login Completed', message='Login as a barber successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='barbershopservices@gmail.com', recipient_list=[f"{request.user.email}"])
                 return HttpResponseRedirect(reverse("barberapp:index"))
             except:
                 userAddress.objects.create(dp=form.cleaned_data["dp"], latitude=form.cleaned_data["latitude"], longitude=form.cleaned_data["longitude"], address=form.cleaned_data["address"], username=request.user.username, About=form.cleaned_data["About"], website=form.cleaned_data["website"])
                 
                 messages.success(request, f"{request.user.username}, You logged in successfully!")
-                send_mail(subject='Login Completed', message='Login as a user successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='irfanwani347@gmail.com', recipient_list=[f"{request.user.email}"])
+                send_mail(subject='Login Completed', message='Login as a user successful! Thanks for joining with us.Your address details were updated successfully! ', from_email='barbershopservices@gmail.com', recipient_list=[f"{request.user.email}"])
                 return HttpResponseRedirect(reverse("barberapp:index"))
         
         messages.warning(request, "Please check your details.There is some error.")
@@ -187,8 +187,8 @@ def appointment(request, barber_id):
                             return render(request, "barberapp/appointment.html", context)
                 
 
-                msg1 = ('Appointment fixed successfully!', f'Your appointment with the barber {brbr.username} was fixed successfully!', 'irfanwani347@gmail.com', [f'{request.user.email}'])
-                msg2 = ('Someone fixed an appointment with you!', f'{request.user.username} fixed an apointment with you.Check it on the website!', 'irfanwani347@gmail.com', [f'{bbr.email}'])
+                msg1 = ('Appointment fixed successfully!', f'Your appointment with the barber {brbr.username} was fixed successfully!', 'barbershopservices@gmail.com', [f'{request.user.email}'])
+                msg2 = ('Someone fixed an appointment with you!', f'{request.user.username} fixed an apointment with you.Check it on the website!', 'barbershopservices@gmail.com', [f'{bbr.email}'])
                 
                 try:
                     apnts = appointmentDetails.objects.filter(barbername=brbr.username, username=request.user.username, datetime=form.cleaned_data["datetime"])
@@ -254,7 +254,7 @@ def change_details(request):
                 userAddress.objects.filter(username=request.user.username).update(latitude=request.POST["latitude"], longitude=request.POST["longitude"], address=request.POST["address"], About=request.POST['abt'], website=request.POST["ws"])
 
         messages.success(request, "Profile updated successfully!")
-        send_mail('Profile updated successfully!', 'Your profile was updated successfully! Go to our website to check the changes.', 'irfanwani347@gmail.com', [f'{request.user.email}'])
+        send_mail('Profile updated successfully!', 'Your profile was updated successfully! Go to our website to check the changes.', 'barbershopservices@gmail.com', [f'{request.user.email}'])
         return HttpResponseRedirect(reverse("barberapp:index"))
         
     return render(request, "barberapp/change_details.html", {"usr": usr, "br": br})
@@ -262,7 +262,7 @@ def change_details(request):
 
 @login_required(login_url="accounts/login")
 def delete_account(request):
-    send_mail('Account deleted successfully', "Your account was deleted successfully.Thanks for spending time with us!", 'irfanwani347@gmail.com', [f'{request.user.email}'])
+    send_mail('Account deleted successfully', "Your account was deleted successfully.Thanks for spending time with us!", 'barbershopservices@gmail.com', [f'{request.user.email}'])
     User.objects.get(username=request.user.username).delete()
     try:
         userAddress.objects.get(username=request.user.username).delete()
@@ -294,8 +294,8 @@ def apnt_details(request, ap_id):
             usr = User.objects.get(username=ap.username)
             brb = User.objects.get(username=ap.barbername)
 
-            msg1 = ('Appointment Cancelled!', f'Your appointment with the barber {brb.username} was cancelled!', 'irfanwani347@gmail.com', [f'{usr.email}'])
-            msg2 = (f'Appointment cancelled with {usr.username}', f'Appointment with {usr.username} was cancelled.Check it on the website!', 'irfanwani347@gmail.com', [f'{brb.email}'])
+            msg1 = ('Appointment Cancelled!', f'Your appointment with the barber {brb.username} was cancelled!', 'barbershopservices@gmail.com', [f'{usr.email}'])
+            msg2 = (f'Appointment cancelled with {usr.username}', f'Appointment with {usr.username} was cancelled.Check it on the website!', 'barbershopservices@gmail.com', [f'{brb.email}'])
             send_mass_mail((msg1, msg2), fail_silently=False)
 
             ap.delete()
@@ -340,8 +340,8 @@ def apnt_completed(request, ap_id):
         usr = User.objects.get(username=ap.username)
         brb = User.objects.get(username=ap.barbername)
 
-        msg1 = ('Appointment Marked as Completed!', f'Your appointment with the barber {brb.username} was completed successfully! If it is not right, please contact the barber.', 'irfanwani347@gmail.com', [f'{usr.email}'])
-        msg2 = (f'Appointment completed with {usr.username}', f'Appointment with {usr.username} was Completed.Check it on the website!', 'irfanwani347@gmail.com', [f'{brb.email}'])
+        msg1 = ('Appointment Marked as Completed!', f'Your appointment with the barber {brb.username} was completed successfully! If it is not right, please contact the barber.', 'barbershopservices@gmail.com', [f'{usr.email}'])
+        msg2 = (f'Appointment completed with {usr.username}', f'Appointment with {usr.username} was Completed.Check it on the website!', 'barbershopservices@gmail.com', [f'{brb.email}'])
         send_mass_mail((msg1, msg2), fail_silently=False)
 
         ap.delete()
