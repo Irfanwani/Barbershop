@@ -11,7 +11,7 @@
         <span style="font-size: 30px;">{{ brbr.username }}</span>
     </button>
     </div>
-        <div class="collapse" id="{{ brbr.username }}" style="position: absolute; z-index: 1;">
+        <div class="collapse" id="{{ brbr.username }}" style="position: relative; z-index: 1; width: 20em;">
             <ul class="barber_details card card-body overflow-auto" style="height: 20em;">
                 <li>
                     <a href="{% url 'barberapp:appointment' barber_id=brbr.id %}" class="btn btn-success btn-block">Fix Appointment</a>
