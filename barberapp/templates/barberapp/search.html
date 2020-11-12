@@ -6,7 +6,7 @@
 
     <button type="button" data-toggle="collapse" data-target="#{{ brbr.username }}" aria-expanded="false" aria-controls="collapseExample" class="btn btn-outline-success btn-block">
         <span class="badge" style="float: left;"><a href="{% url 'barberapp:profile' user=brbr.username %}">
-            <img src="{{ brbr.dp.url }}" alt="Barber profile" style="height: 50px; width: 50px; border-radius: 50px;" title="click to see barber's profile.">
+            <img src="{{ brbr.dp.url }}" alt="Barber profile" class="rounded-circle" style="height: 50px; width: 50px;" title="click to see barber's profile.">
         </a></span>
         <span style="font-size: 30px;">{{ brbr.username }}</span>
     </button>

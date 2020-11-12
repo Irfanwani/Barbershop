@@ -34,7 +34,7 @@
     <form class="form-group" action="{% url 'barberapp:change_details' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
             <label for="dp_change">
-                <img title="Change Profile Photo" id="dp_label" src="{{ usr.dp.url }}" alt="DP" style="height: 150px; width: 150px; border-radius: 50%;" >
+                <img title="Change Profile Photo" id="dp_label" src="{{ usr.dp.url }}" alt="DP" style="height: 150px; width: 150px;" class="rounded-circle">
             </label>
             <input style="display: none;" id="dp_change" name="DP" type="file" accept="image/*" class="detail form-control" readonly>
         <br>
