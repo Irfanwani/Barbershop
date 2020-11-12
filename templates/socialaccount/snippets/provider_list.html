@@ -14,14 +14,16 @@
 </li>
 {% endfor %}
 {% endif %}
-<script>
-  '{{ provider.name }}'.toLowerCase();
-  console.log('{{ provider.name }}');
-</script>
+
 <li class="list-group-item" style="border: none;">
   <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" id="{{provider.name}}"
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><img title="Click to sign in with {{provider.name}}" id="{{provider.name}}" src="/static/images/{{provider.name}}_icon.png"></a>
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><img title="Click to sign in with {{provider.name}}" id="{{provider.name}}" src=""></a>
 </li>
+<script>
+  var provider_name = '{{provider.name}}'.toLowerCase();
+  console.log(provider_name);
+  document.getElementById("{{provider.name}}").setAttribute('src', `/static/images/${provider_name}_icon.png`);
+</script>
 {% endfor %}
 
 
