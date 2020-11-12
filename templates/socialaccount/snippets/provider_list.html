@@ -15,7 +15,8 @@
 {% endfor %}
 {% endif %}
 <script>
-  '{{ provider.name }}'.toLowerCase();
+  '{{provider.name}}' = '{{ provider.name }}'.toLowerCase();
+  console.log('{{ provider.name }}');
 </script>
 <li class="list-group-item" style="border: none;">
   <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" id="{{provider.name}}"
