@@ -23,12 +23,18 @@
     #dp_add {
         cursor: pointer;
     }
+    @media screen and (min-width: 720px) {
+        #ad_form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
     <br>
-    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+    <div id='ad_form' style="display: grid; grid-template-columns: 1fr 1fr;">
     <div class="card text-center">
         <div class="card-body">
     <br>
