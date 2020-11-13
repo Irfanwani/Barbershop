@@ -70,7 +70,7 @@
 {% if request.user.is_authenticated %}
 
     <button class="btn shadow-none" data-toggle="collapse" data-target="#bbbr" aria-expanded="false" aria-controls="collapseExample" type="button" id="lnk_brbr"><img src="{% static 'images/menu.png' %}" alt="Menu" style="margin-left: 10px;"></button>
-    <div id="bbbr" class="collapse table-responsive" style="position: absolute; z-index: 1;">
+    <div id="bbbr" class="collapse" style="position: absolute; z-index: 1; overflow-x: scroll;">
         <div class="card card-body">
             <h6>Barbers Around You</h6>
 
