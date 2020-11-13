@@ -17,7 +17,7 @@
 
 <li class="list-group-item" style="border: none;">
   <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" id="{{provider.name}}"
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><img title="Click to sign in with {{provider.name}}" id="{{provider.name}}" src="/static/images/{{provider.name}}_icon.png"></a>
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><img title="Click to sign in with {{provider.name}}" id="{{provider.name}}" src="{% static 'images/Google_icon.png' %}"></a>
 </li>
 
 {% endfor %}
