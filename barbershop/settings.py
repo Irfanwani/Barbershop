@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 
     'crispy_forms',
 
-    'django_cleanup',
 
     'django.contrib.sites',
 
