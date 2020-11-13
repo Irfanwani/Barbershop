@@ -66,6 +66,12 @@
             animation-play-state: running;
 
         }
+      
+      @media screen and (max-width: 320px) {
+        #navbar {
+          font-size: 10px;
+        }
+      }
   </style>
 
 
@@ -80,7 +86,7 @@
       </a>
       
         {% if user.is_authenticated %}
-        <div class="dropdown dropleft">
+        <div class="dropdown dropleft" id="usr_name_options">
         
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ user.username }}
