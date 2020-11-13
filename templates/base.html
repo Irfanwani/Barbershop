@@ -68,8 +68,8 @@
         }
       
       @media screen and (max-width: 320px) {
-        #usr_name_options {
-          font-size: 10px;
+        #navbar {
+          margin-bottom: 112px;
         }
       }
   </style>
@@ -86,7 +86,7 @@
       </a>
       
         {% if user.is_authenticated %}
-        <div class="dropdown dropleft" id="usr_name_options">
+        <div class="dropdown dropleft">
         
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ user.username }}
