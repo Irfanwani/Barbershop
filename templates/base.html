@@ -68,8 +68,8 @@
         }
       
       @media screen and (max-width: 320px) {
-        #navbar {
-          margin-bottom: 112px;
+        #container_div {
+          margin-top: 100px;
         }
       }
   </style>
@@ -86,7 +86,7 @@
       </a>
       
         {% if user.is_authenticated %}
-        <div class="dropdown dropleft">
+        <div id="usr_name_btn" class="dropdown dropleft">
         
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ user.username }}
@@ -162,6 +162,10 @@
   
 {% if user.is_authenticated %}
   <script>
+    if (window.innerWidth <= '320px') {
+      document.getElementById("usr_name_btn").classList.remove('dropleft');
+    };
+
     document.querySelectorAll("ul").forEach(ul => {
         ul.classList.add("list-group");
     });
