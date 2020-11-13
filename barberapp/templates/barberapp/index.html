@@ -298,16 +298,15 @@ document.getElementById("container_div").classList.remove("container");
 
 
 var image1 = "{% static 'images/placeholder.png' %}";
-
-//Getting position of user and barbers and showing that on the map.
-document.querySelector("#a_l").onclick = () => {
-    if(navigator.geolocation) {
-        marker = new google.maps.Marker({
+marker = new google.maps.Marker({
             map: map,
             icon: image1,
             title: 'Your current location',
             animation: google.maps.Animation.DROP,
         });
+//Getting position of user and barbers and showing that on the map.
+document.querySelector("#a_l").onclick = () => {
+    if(navigator.geolocation) {
         navigator.geolocation.watchPosition(position => {
             var lt = position.coords.latitude;
             var ln = position.coords.longitude;
