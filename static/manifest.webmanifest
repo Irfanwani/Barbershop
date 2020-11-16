@@ -4,12 +4,12 @@
   "description": "Search for the nearest barbers.",
   "icons": [
     {
-      "src": "static/images/icons-192.png",
+      "src": "images/icons-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "static/images/icons-512.png",
+      "src": "images/icons-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
@@ -25,14 +25,14 @@
       "short_name": "Profile",
       "description": "Show user's profile",
       "url": "/change_details?source=pwa",
-      "icons": [{ "src": "static/images/icons-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "images/icons-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Terms and conditions, help and privacy policy",
       "short_name": "Help",
       "description": "Show help related to how to use the app.",
       "url": "/tac#help?source=pwa",
-      "icons": [{ "src": "/images/icons-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "images/icons-192.png", "sizes": "192x192" }]
     }
   ]
 }
