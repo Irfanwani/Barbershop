@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from django.views.generic import TemplateView
 
 app_name = "barberapp"
 
@@ -15,6 +16,8 @@ urlpatterns = [
     path('profile/<str:user>', views.profile, name="profile"),
     path("apnt_completed/<int:ap_id>", views.apnt_completed, name="apnt_completed"),
     path("tac", views.tac, name="tac"),
+    path('sw.js', (TemplateView.as_view(template_name="barberapp/sw.js", 
+         content_type='application/javascript', )), name='sw.js'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, 
