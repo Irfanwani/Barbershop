@@ -14,7 +14,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/?source=pwa",
+  "start_url": "/",
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
@@ -24,14 +24,14 @@
       "name": "Your profile",
       "short_name": "Profile",
       "description": "Show user's profile",
-      "url": "/change_details?source=pwa",
+      "url": "/change_details",
       "icons": [{ "src": "images/icons-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Terms and conditions, help and privacy policy",
       "short_name": "Help",
       "description": "Show help related to how to use the app.",
-      "url": "/tac#help?source=pwa",
+      "url": "/tac#help",
       "icons": [{ "src": "images/icons-192.png", "sizes": "192x192" }]
     }
   ]
