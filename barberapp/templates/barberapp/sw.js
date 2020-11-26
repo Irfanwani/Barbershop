@@ -1,7 +1,8 @@
 const staticCacheName = 'site-static';
 const assets = [
     '/',
-    '/static'
+    '/static/images',
+    '/static/app.js'
 ];
 
 // installation event
