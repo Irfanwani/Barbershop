@@ -1,6 +1,7 @@
 const staticCacheName = 'site-static';
 const assets = [
-    '/'
+    '/',
+    '/static'
 ];
 
 // installation event
