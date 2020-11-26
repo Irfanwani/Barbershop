@@ -9,11 +9,11 @@ const assets = [
     'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css',
     '"https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js',
-]
+];
 
 // installation event
 self.addEventListener('install', evt => {
-    //console.log('Service worker has been installed.');
+    console.log('Service worker has been installed.');
     evt.waitUntil(
         caches.open(staticCacheName).then(cache => {
             console.log('caching assets');
