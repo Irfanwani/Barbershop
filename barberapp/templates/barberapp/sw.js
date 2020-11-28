@@ -1,8 +1,7 @@
 const staticCacheName = 'site-static';
 const assets = [
     '/',
-    '/static/images',
-    '/static/app.js'
+    '/static/images/barbershop.jpg'
 ];
 
 // installation event
