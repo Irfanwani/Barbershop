@@ -1,7 +1,6 @@
 const staticCacheName = 'site-static';
 const assets = [
-    '/',
-    '/static/images/barbershop.jpg'
+    '/'
 ];
 
 // installation event
@@ -25,7 +24,7 @@ self.addEventListener('fetch', evt => {
     //console.log('fetch event', evt);
     evt.respondWith(
         caches.match(evt.request).then(casheRes => {
-            return casheRes || fetch(evt.request);
+            return casheRes
         })
     )
 });
