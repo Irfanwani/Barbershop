@@ -1,6 +1,5 @@
 const staticCacheName = 'site-static';
 const assets = [
-    '/',
     '/static/images/head_icon.png',
     '/static/images/icon.png',
     "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css",
