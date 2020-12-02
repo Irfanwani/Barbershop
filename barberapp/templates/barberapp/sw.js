@@ -1,4 +1,5 @@
-const staticCacheName = 'site-static';
+const staticCacheName = 'site-static-v1';
+//const dynamicCache = 'dynamic-cache-v1';
 const assets = [
     '/static/images/head_icon.png',
     '/static/images/icon.png',
@@ -10,7 +11,8 @@ const assets = [
     "https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css",
     "https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js",
     "https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js",
-    "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js",
+    '/static/snake-game.html'
 ];
 
 // installation event
@@ -26,7 +28,15 @@ self.addEventListener('install', evt => {
 
 // activation event
 self.addEventListener('activate', evt => {
-    console.log('Service worker has been activated.');
+    //console.log('Service worker has been activated.');
+    evt.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(keys
+                .filter(key => key !== staticCacheName)
+                .map(key => caches.delete(key))
+                )
+        })
+    )
 }); 
 
 // fetch event
@@ -34,7 +44,12 @@ self.addEventListener('fetch', evt => {
     //console.log('fetch event', evt);
     evt.respondWith(
         caches.match(evt.request).then(casheRes => {
-            return casheRes || fetch(evt.request);
-        })
+            return casheRes || fetch(evt.request);/*.then(fetchRes => {
+                return caches.open(dynamicCache).then(cache => {
+                    cache.put(evt.request.url, fetchRes.clone());
+                    return fetchRes;
+                })
+            });*/
+        }).catch(() => caches.match('/static/snake-game.html'))
     )
 });
