@@ -78,11 +78,6 @@
 
         }
       
-      @media screen and (max-width: 320px) {
-        #container_div {
-          margin-top: 100px;
-        }
-      }
       
       @media screen and (max-width: 375px) {
        .slide_img {
@@ -187,10 +182,10 @@
   
 {% if user.is_authenticated %}
   <script>
-    var med = window.matchMedia("(max-width: 320px)");
-    if (med.matches) {
+    if(document.getElementById('navbar').offsetHeight > 56) {
       document.getElementById("usr_name_btn").classList.remove('dropleft');
-    };
+      document.getElementById('container_div').style.marginTop = '100px';
+    }
 
     document.querySelectorAll("ul").forEach(ul => {
         ul.classList.add("list-group");

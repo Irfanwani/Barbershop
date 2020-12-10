@@ -52,7 +52,7 @@ self.addEventListener('fetch', evt => {
             });*/
         }).catch(() => {
             if(evt.request.url.indexOf('.html') > -1) {
-                caches.match('/static/snake-game.html');
+                return caches.match('/static/snake-game.html');
             }
         })
     )
