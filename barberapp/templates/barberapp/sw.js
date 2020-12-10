@@ -41,7 +41,7 @@ self.addEventListener('activate', evt => {
 
 // fetch event
 self.addEventListener('fetch', evt => {
-    //console.log('fetch event', evt);
+    console.log('fetch event', evt);
     evt.respondWith(
         caches.match(evt.request).then(casheRes => {
             return casheRes || fetch(evt.request);/*.then(fetchRes => {
@@ -51,9 +51,7 @@ self.addEventListener('fetch', evt => {
                 })
             });*/
         }).catch(() => {
-            if(evt.request.url.indexOf('.html') > -1) {
-                return caches.match('/static/snake-game.html');
-            }
+            caches.match('/static/snake-game.html');
         })
     )
 });

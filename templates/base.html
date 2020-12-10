@@ -182,11 +182,6 @@
   
 {% if user.is_authenticated %}
   <script>
-    if(document.getElementById('navbar').offsetHeight > 56) {
-      document.getElementById("usr_name_btn").classList.remove('dropleft');
-      document.getElementById('container_div').style.marginTop = '100px';
-    }
-
     document.querySelectorAll("ul").forEach(ul => {
         ul.classList.add("list-group");
     });
@@ -205,6 +200,10 @@
 {% endif %}
 
 <script>
+    if(document.getElementById('navbar').offsetHeight > 56) {
+      document.getElementById("usr_name_btn").classList.remove('dropleft');
+      document.getElementById('container_div').style.marginTop = '100px';
+    }
     document.querySelectorAll(".alert-error").forEach(err => {
       err.classList.add('alert-danger');
     });
