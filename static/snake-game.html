@@ -2,30 +2,76 @@
 <html>
 <head>
   <title>Basic Snake HTML Game</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
   <style>
   html, body {
     height: 100%;
     margin: 0;
   }
-
   body {
-    background: black;
+    background-color: black;
+  }
+
+  .body {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
   }
   canvas {
     border: 1px solid white;
   }
+
+  .btns {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .fbtn {
+    margin: 0px 20px 0px 20px;
+  }
+  .game-over {
+    position: absolute;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+  }
   </style>
 </head>
 <body>
-  <div>
-    <h3 style="color: aqua;">OOPS! Seems you are offline.</h3>
+  <h3 style="color: aliceblue; position: fixed; margin: 20px 0px 0px 20px;" id="score"></h3>
+  <h4 style="background-color: white; position: absolute;">OOPS! Seems you are offline.</h4>
+  <div id="game-over" class="game-over">
+    <h2 style="color: red; border-radius: 10px; box-shadow: 1px 1px 10px 0px white; background-color: black; padding: 5px 5px 5px 5px;">Game Over!<button id="restart" class="btn btn-success" type="button">Restart</button></h2>
   </div>
+  <div style="text-align: center; margin-top: 20px; position: absolute; width: 100%;">
+    <a href="" class="btn btn-warning" id="reload-page">Reload Page</a>
+  </div>
+<div class="body">
 <canvas width="400" height="400" id="game"></canvas>
+<div>
+  <div class="btns">
+    <button class="btn btn-primary" onclick="u()" type="button" id="U">🔼</button>
+  </div>
+  <div style="display: flex;">
+    <button onclick="l()" type="button" id="L" class="fbtn btn btn-primary">◀</button>
+    <button onclick="r()" type="button" id="R" class="fbtn btn btn-primary">▶</button>
+  </div>
+  <div class="btns">
+    <button class="btn btn-primary" onclick="d()" type="button" id="D">🔽</button>
+</div>
+</div>
+</div>
 <script>
+document.getElementById("reload-page").setAttribute('href', window.location.href);
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
@@ -56,11 +102,12 @@ var apple = {
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
-
+var score = 0;
 // game loop
 function loop() {
   requestAnimationFrame(loop);
 
+  
   // slow game loop to 15 fps instead of 60 (60/15 = 4)
   if (++count < 4) {
     return;
@@ -108,9 +155,12 @@ function loop() {
     // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
     context.fillRect(cell.x, cell.y, grid-1, grid-1);
 
+    
     // snake ate apple
     if (cell.x === apple.x && cell.y === apple.y) {
       snake.maxCells++;
+      score++;
+      
 
       // canvas is 400x400 which is 25x25 grids
       apple.x = getRandomInt(0, 25) * grid;
@@ -122,18 +172,26 @@ function loop() {
 
       // snake occupies same space as a body part. reset game
       if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+        document.getElementById("game-over").style.visibility = 'visible';
+        snake.dx = 0;
+        snake.dy = 0;
+      }
+
+    }
+    document.getElementById('restart').onclick = () => {
         snake.x = 160;
         snake.y = 160;
         snake.cells = [];
         snake.maxCells = 4;
         snake.dx = grid;
         snake.dy = 0;
-
+        score = 0;
         apple.x = getRandomInt(0, 25) * grid;
         apple.y = getRandomInt(0, 25) * grid;
+        document.getElementById("game-over").style.visibility = "hidden";
       }
-    }
   });
+  document.getElementById('score').innerHTML = `Score: ${score}`;
 }
 
 // listen to keyboard events to move the snake
@@ -144,27 +202,57 @@ document.addEventListener('keydown', function(e) {
   // shouldn't let you collide with your own body)
 
   // left arrow key
-  if (e.which === 37 && snake.dx === 0) {
-    snake.dx = -grid;
-    snake.dy = 0;
+  if (e.which === 37) {
+    l();
   }
   // up arrow key
-  else if (e.which === 38 && snake.dy === 0) {
-    snake.dy = -grid;
-    snake.dx = 0;
+  else if (e.which === 38) {
+    u();
   }
   // right arrow key
-  else if (e.which === 39 && snake.dx === 0) {
-    snake.dx = grid;
-    snake.dy = 0;
+  else if (e.which === 39) {
+    r();
   }
   // down arrow key
-  else if (e.which === 40 && snake.dy === 0) {
-    snake.dy = grid;
-    snake.dx = 0;
+  else if (e.which === 40) {
+    d();
   }
 });
 
+
+  // USING CREATED BUTTONS
+
+  // left key
+  function l() {
+    if(snake.dx === 0) {
+      snake.dx = -grid;
+      snake.dy = 0;
+    }
+  }
+
+  // up key
+  function u() {
+    if(snake.dy === 0) {
+      snake.dy = -grid;
+      snake.dx = 0;
+    }
+  }
+
+  // right key 
+  function r() {
+    if(snake.dx === 0) {
+      snake.dx = grid;
+      snake.dy = 0;
+    }
+  }
+  // down key 
+  function d() {
+    if(snake.dy === 0) {
+      snake.dy = grid;
+      snake.dx = 0;
+    }
+  }
+ 
 // start the game
 requestAnimationFrame(loop);
 </script>

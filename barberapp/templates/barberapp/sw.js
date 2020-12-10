@@ -1,4 +1,4 @@
-const staticCacheName = 'site-static-v1';
+const staticCacheName = 'site-static-v2';
 //const dynamicCache = 'dynamic-cache-v1';
 const assets = [
     '/static/images/head_icon.png',
@@ -50,6 +50,10 @@ self.addEventListener('fetch', evt => {
                     return fetchRes;
                 })
             });*/
-        }).catch(() => caches.match('/static/snake-game.html'))
+        }).catch(() => {
+            if(evt.request.url.indexOf('.html') > -1) {
+                caches.match('/static/snake-game.html');
+            }
+        })
     )
 });
