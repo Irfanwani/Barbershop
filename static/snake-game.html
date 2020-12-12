@@ -4,7 +4,7 @@
   <title>No Internet Connection</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=0.7">
 
   
   <style>
@@ -17,10 +17,13 @@
   }
 
   .body {
+    position: fixed;
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    
   }
   canvas {
     border: 1px solid white;
@@ -35,33 +38,71 @@
     margin: 0px 20px 0px 20px;
   }
   .game-over {
-    position: absolute;  
+    position: fixed;  
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
     width: 100%;
     height: 100%;
     visibility: hidden;
   }
+
+  .g_o {
+    color: red; 
+    border-radius: 10px; 
+    box-shadow: 1px 1px 10px 0px white; 
+    background-color: black; 
+    padding: 5px 5px 5px 5px;
+  }
+
+  #score {
+    color: aliceblue; 
+    position: fixed; 
+    margin: 50px 0px 0px 20px;
+  }
+
+  .offline {
+    color: white; 
+    position: relative; 
+    font-weight: 100;
+  }
+
+  .reload_page{
+    text-align: right; 
+    margin-top: 20px; 
+    position: absolute; 
+    width: 95%;
+    z-index: 1;
+  }
+
+  .all_buttons {
+    position: fixed; 
+    bottom: 0; 
+    width: 100%;
+  }
   </style>
 </head>
 <body>
-  <h3 style="color: aliceblue; position: fixed; margin: 50px 0px 0px 20px;" id="score"></h3>
-  <h4 style="color: white; position: absolute; font-weight: 100;">🌋OOPS! Seems you are offline.</h4>
+  <h3 id="score"></h3>
+  <h4 class="offline">🌋OOPS! Seems you are offline.</h4>
   <div id="game-over" class="game-over">
-    <h2 style="color: red; border-radius: 10px; box-shadow: 1px 1px 10px 0px white; background-color: black; padding: 5px 5px 5px 5px;">Game Over!<button id="restart" class="btn btn-success" type="button">Restart</button></h2>
+    <h2 class="g_o">Game Over!<button style="z-index: 1;" id="restart" class="btn btn-success" type="button">Restart</button></h2>
   </div>
-  <div style="text-align: center; margin-top: 20px; position: absolute; width: 100%;">
+  <div class="reload_page">
     <a href="" class="btn btn-warning" id="reload-page">Reload Page</a>
   </div>
 <div class="body">
-<canvas width="400" height="400" id="game"></canvas>
-<div>
+  <div id="u_d"></div>
+  <canvas width="400" height="400" id="game"></canvas>
+  <div id="l_r"></div>
+</div>
+
+<!-- buttons for mobile control -->
+<div class="all_buttons">
   <div class="btns">
     <button class="btn btn-primary" onclick="u()" type="button" id="U">🔼</button>
   </div>
-  <div style="display: flex;">
+  <div class="fbtns" style="display: flex; justify-content: center;">
     <button onclick="l()" type="button" id="L" class="fbtn btn btn-primary">◀</button>
     <button onclick="r()" type="button" id="R" class="fbtn btn btn-primary">▶</button>
   </div>
@@ -69,8 +110,23 @@
     <button class="btn btn-primary" onclick="d()" type="button" id="D">🔽</button>
 </div>
 </div>
-</div>
 <script>
+if(window.innerHeight < window.innerWidth) {
+  document.querySelector(".all_buttons").style.display = 'none';
+  document.querySelectorAll("button").forEach(btn => {
+    btn.classList.add('fbtn');
+  })
+
+  document.querySelectorAll('.btns').forEach(btn => {
+    document.getElementById("u_d").innerHTML += btn.innerHTML;
+  })
+
+  document.querySelectorAll('.fbtns').forEach(btn => {
+    document.getElementById("l_r").innerHTML += btn.innerHTML;
+  })
+}
+
+
 document.getElementById("reload-page").setAttribute('href', window.location.href);
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
@@ -106,7 +162,6 @@ var score = 0;
 // game loop
 function loop() {
   requestAnimationFrame(loop);
-
   
   // slow game loop to 15 fps instead of 60 (60/15 = 4)
   if (++count < 4) {
@@ -173,6 +228,7 @@ function loop() {
       // snake occupies same space as a body part. reset game
       if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
         document.getElementById("game-over").style.visibility = 'visible';
+        document.getElementById("game-over").style.zIndex = '1';
         snake.dx = 0;
         snake.dy = 0;
       }
@@ -252,6 +308,7 @@ document.addEventListener('keydown', function(e) {
       snake.dx = 0;
     }
   }
+
  
 // start the game
 requestAnimationFrame(loop);
