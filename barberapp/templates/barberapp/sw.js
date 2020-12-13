@@ -28,7 +28,7 @@ self.addEventListener('install', evt => {
 
 // activation event
 self.addEventListener('activate', evt => {
-    //console.log('Service worker has been activated.');
+    console.log('Service worker has been activated.');
     evt.waitUntil(
         caches.keys().then(keys => {
             return Promise.all(keys
