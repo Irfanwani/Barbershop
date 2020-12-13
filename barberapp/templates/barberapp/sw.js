@@ -1,4 +1,4 @@
-const staticCacheName = 'site-static-v2';
+const staticCacheName = 'site-static-v1';
 //const dynamicCache = 'dynamic-cache-v1';
 const assets = [
     '/static/images/head_icon.png',
