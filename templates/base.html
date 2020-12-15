@@ -191,6 +191,7 @@
 <script>
   // Styling the carousel-caption for portrait devices
   if(window.innerHeight > window.innerWidth) {
+    document.getElementById("carouselExampleCaptions").classList.add('carousel-fade');
     document.querySelectorAll('h1').forEach(h1 => {
       h1.style.fontSize = '20px';
     })
