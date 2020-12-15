@@ -200,7 +200,9 @@
   }
 
   // Styling the container_div as per the navbar
-  document.getElementById('container_div').style.marginTop = document.getElementById("navbar").offsetHeight;
+  window.onload = () => {
+    document.getElementById('container_div').style.marginTop = document.getElementById("navbar").offsetHeight;
+  }
 
   // Styling the error messages
   document.querySelectorAll(".alert-error").forEach(err => {
