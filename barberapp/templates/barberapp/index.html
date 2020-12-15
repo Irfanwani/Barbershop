@@ -381,8 +381,10 @@ function initMap() {
 {% endif %}
 <script>
     // Styling slide images for landscape screens
-    document.querySelectorAll('.slide_img').forEach(img => {
-        img.style.height = window.innerHeight - document.getElementById("navbar").offsetHeight;
-    })
+    if(window.innerHeight < window.innerWidth) {
+        document.querySelectorAll('.slide_img').forEach(img => {
+            img.style.height = window.innerHeight - document.getElementById("navbar").offsetHeight;
+        })
+    }
 </script>
 {% endblock %}
