@@ -33,7 +33,6 @@
 
     .slide_img {
         width: 100%;
-        height: 33em;
         min-height: 250px;
         filter: brightness(30%);
     }
@@ -380,4 +379,10 @@ function initMap() {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQtLSpcjTP48RAp_w6xR5rgQd5btHiZdg&callback=initMap&libraries=&v=weekly"
       defer></script>
 {% endif %}
+<script>
+    // Styling slide images for landscape screens
+    document.querySelectorAll('.slide_img').forEach(img => {
+        img.style.height = window.innerHeight - document.getElementById("navbar").offsetHeight;
+    })
+</script>
 {% endblock %}
