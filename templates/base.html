@@ -51,7 +51,6 @@
        min-height: 100%;
      }
      #container_div {
-       margin-top: 56px;
        margin-bottom: 145px;
      }
     li {
@@ -168,20 +167,24 @@
   
 {% if user.is_authenticated %}
   <script>
-    document.querySelectorAll("ul").forEach(ul => {
-        ul.classList.add("list-group");
-    });
+  // Styling the container_div for very small screens or very large navbar content(if username is too long to push navbar in another line)
+  if(document.getElementById('navbar').offsetHeight > 56) {
+     document.getElementById("usr_name_btn").classList.remove('dropleft');
+  }
+  document.querySelectorAll("ul").forEach(ul => {
+      ul.classList.add("list-group");
+  });
 
-    document.querySelectorAll("li").forEach(li => {
-        li.classList.add('list-group-item');
+  document.querySelectorAll("li").forEach(li => {
+    li.classList.add('list-group-item');
 
-        li.onmouseover = () => {
-          li.classList.add('shadow-lg');
-        }
-        li.onmouseout = () => {
-          li.classList.remove('shadow-lg');
-        }
-    });
+    li.onmouseover = () => {
+      li.classList.add('shadow-lg');
+    }
+    li.onmouseout = () => {
+      li.classList.remove('shadow-lg');
+    }
+  });
   </script>
 {% endif %}
 
@@ -196,11 +199,8 @@
     })
   }
 
-  // Styling the navbar for very small screens or very large navbar content(if username is too long to push navbar in another line)
-  if(document.getElementById('navbar').offsetHeight > 56) {
-    document.getElementById('container_div').style.marginTop = '100px';
-    document.getElementById("usr_name_btn").classList.remove('dropleft');
-  }
+  // Styling the container_div as per the navbar
+  document.getElementById('container_div').style.marginTop = document.getElementById("navbar").offsetHeight;
 
   // Styling the error messages
   document.querySelectorAll(".alert-error").forEach(err => {
