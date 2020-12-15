@@ -198,9 +198,10 @@
 
   // Styling the navbar for very small screens or very large navbar content(if username is too long to push navbar in another line)
   if(document.getElementById('navbar').offsetHeight > 56) {
-    document.getElementById("usr_name_btn").classList.remove('dropleft');
     document.getElementById('container_div').style.marginTop = '100px';
+    document.getElementById("usr_name_btn").classList.remove('dropleft');
   }
+
   // Styling the error messages
   document.querySelectorAll(".alert-error").forEach(err => {
     err.classList.add('alert-danger');
