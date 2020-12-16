@@ -209,6 +209,9 @@
     col.onmouseover = () => {
       col.classList.add('shadow-lg');
     }
+    col.onmouseout = () => {
+      col.classList.remove("shadow-lg");
+    }
   });
 
   window.onload = () => {
