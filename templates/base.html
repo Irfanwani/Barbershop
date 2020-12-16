@@ -91,30 +91,29 @@
       </a>
       
         {% if user.is_authenticated %}
-        <!-- <script>
-          document.getElementById("navbar").classList.remove('navbar-expand-sm');
-          document.getElementById("navbar").classList.add('navbar-expand-lg');
-        </script> -->
-
-        <div id="usr_name_btn" class="dropdown dropleft">
         
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{ user.username }}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span>{{user.username}}</span>
         </button>
 
-        <div  class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuButton">
-        
-            <a class="dropdown-item" href="{% url 'barberapp:apnt_details' ap_id=1 %}">My appointments</a>
-          
-            <a class="dropdown-item" href="{% url 'account_email' %}">Change E-mail</a> 
-    
-            <a class="dropdown-item" href="{% url 'account_reset_password' %}">Change Password</a>  
-        
-            <a class="dropdown-item" href="{% url 'barberapp:change_details' %}">Profile</a>  
-          
-            <a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a>
-        
-      </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'barberapp:apnt_details' ap_id=1 %}">My appointments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_email' %}">Change E-mail</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_reset_password' %}">Change Password</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'barberapp:change_details' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: red;" href="{% url 'account_logout' %}">Sign Out</a>
+            </li>
+          </ul>
         </div>
 
         {% else %}
@@ -172,10 +171,11 @@
   
 {% if user.is_authenticated %}
   <script>
-  // Styling the container_div for very small screens or very large navbar content(if username is too long to push navbar in another line)
-  if(document.getElementById('navbar').offsetHeight > 56) {
-     document.getElementById("usr_name_btn").classList.remove('dropleft');
-  }
+  // Styling the navbar for smaller devices
+  document.getElementById("navbar").classList.remove('navbar-expand-sm');
+  document.getElementById("navbar").classList.add('navbar-expand-lg');
+
+  // Styling the list items
   document.querySelectorAll("ul").forEach(ul => {
       ul.classList.add("list-group");
   });
