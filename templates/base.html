@@ -204,11 +204,13 @@
     })
   }
 
-  // Styling the carousel-caption
-  if(document.querySelector('.slide_img').offsetHeight - document.querySelector('.carousel-caption') < 150) {
-    styling();
-  }
-  
+  // Styling the info-cards
+  document.querySelectorAll('.col-lg-4').forEach(col => {
+    col.onmouseover = () => {
+      col.classList.add('shadow-lg');
+    }
+  });
+
   window.onload = () => {
     // Styling the container_div as per the navbar
     document.getElementById('container_div').style.marginTop = `${document.getElementById("navbar").offsetHeight}px`;
