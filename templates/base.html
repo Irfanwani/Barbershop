@@ -91,6 +91,11 @@
       </a>
       
         {% if user.is_authenticated %}
+        <!-- <script>
+          document.getElementById("navbar").classList.remove('navbar-expand-sm');
+          document.getElementById("navbar").classList.add('navbar-expand-lg');
+        </script> -->
+
         <div id="usr_name_btn" class="dropdown dropleft">
         
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,7 +124,7 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
           <br>
-          <a href="{% url 'account_login' %}" class="btn btn-outline-success">Sign In</a>
+          <a href="{% url 'account_login' %}" class="btn btn-outline-success" style="margin-right: 5px;">Sign In</a>
           <br>
           <a href="{% url 'account_signup' %}" class="btn btn-outline-success">Sign Up</a>
         </div>
