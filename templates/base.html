@@ -177,16 +177,6 @@
 
   // Styling the list items
   document.querySelectorAll("ul").forEach(ul => {
-      ul.classList.add("list-group");
-  });
-
-  document.querySelectorAll("li").forEach(li => {
-    li.classList.add('list-group-item');
-
-
-  });
-
-  document.querySelectorAll("ul").forEach(ul => {
       if(!ul.classList.contains('navbar-nav')) {
         ul.classList.add("list-group");
       }
