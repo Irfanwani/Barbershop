@@ -203,13 +203,13 @@
       h5.style.fontSize = '15px';
     })
   }
+
+  // Styling the carousel-caption
+  if(document.querySelector('.slide_img').offsetHeight - document.querySelector('.carousel-caption') < 150) {
+    styling();
+  }
   
   window.onload = () => {
-    // Styling the carousel-caption
-    if(document.querySelector('.slide_img').offsetHeight - document.querySelector('.carousel-caption') < 150) {
-      styling();
-    }
-
     // Styling the container_div as per the navbar
     document.getElementById('container_div').style.marginTop = `${document.getElementById("navbar").offsetHeight}px`;
   }
