@@ -84,7 +84,7 @@
   <body id="body">
     {% block body %}
 
-    <nav id="navbar" class="navbar navbar-dark bg-dark fixed-top">
+    <nav id="navbar" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
       <a href="{% url 'barberapp:index' %}">
         <img src="{% static 'images/icon.png' %}" alt="barbershop">
         
@@ -117,7 +117,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+        <div class="navbar-nav ml-auto">
           <br>
           <a href="{% url 'account_login' %}" class="btn btn-outline-success">Sign In</a>
           <br>
