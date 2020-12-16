@@ -125,7 +125,7 @@
           <br>
           <a href="{% url 'account_login' %}" class="btn btn-outline-success" style="margin-right: 5px;">Sign In</a>
           <br>
-          <a href="{% url 'account_signup' %}" class="btn btn-outline-success">Sign Up</a>
+          <a href="{% url 'account_signup' %}" class="btn btn-outline-success" style="margin-right: 5px;">Sign Up</a>
         </div>
       </div> 
       {% endif %}
@@ -231,10 +231,10 @@
     })
   }
 
+  // Styling the container_div as per the navbar
+  document.getElementById('container_div').style.marginTop = `${document.getElementById("navbar").offsetHeight}px`;
+  
   window.onload = () => {
-    // Styling the container_div as per the navbar
-    document.getElementById('container_div').style.marginTop = `${document.getElementById("navbar").offsetHeight}px`;
-    
     // Animating the messages(fade-show)
     if(document.getElementById("msg_al")) {
     setTimeout(function(){
