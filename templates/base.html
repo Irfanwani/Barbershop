@@ -197,19 +197,21 @@
 {% else %}
 <script>
   // Styling the carousel-caption for portrait devices
-  if(window.innerHeight > window.innerWidth) {
-    document.getElementById("carouselExampleCaptions").classList.add('carousel-fade');
+  if(window.location.pathname == '/') {
+    if(window.innerHeight > window.innerWidth ) {
+      document.getElementById("carouselExampleCaptions").classList.add('carousel-fade');
+    }
+    
+    // Styling the info-cards
+    document.querySelectorAll('.col-lg-4').forEach(col => {
+      col.onmouseover = () => {
+        col.classList.add('shadow-lg');
+      }
+      col.onmouseout = () => {
+        col.classList.remove("shadow-lg");
+      }
+    });
   }
-
-  // Styling the info-cards
-  document.querySelectorAll('.col-lg-4').forEach(col => {
-    col.onmouseover = () => {
-    col.classList.add('shadow-lg');
-  }
-  col.onmouseout = () => {
-    col.classList.remove("shadow-lg");
-  }
-  });
 
 </script>
 {% endif %}
