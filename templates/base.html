@@ -183,13 +183,26 @@
   document.querySelectorAll("li").forEach(li => {
     li.classList.add('list-group-item');
 
-    li.onmouseover = () => {
-      li.classList.add('shadow-lg');
-    }
-    li.onmouseout = () => {
-      li.classList.remove('shadow-lg');
-    }
+
   });
+
+  document.querySelectorAll("ul").forEach(ul => {
+      if(!ul.classList.contains('navbar-nav')) {
+        ul.classList.add("list-group");
+      }
+    });
+
+    document.querySelectorAll("li").forEach(li => {
+      if(!li.classList.contains('nav-item')) {
+        li.classList.add('list-group-item');
+        li.onmouseover = () => {
+          li.classList.add('shadow-lg');
+        }
+        li.onmouseout = () => {
+          li.classList.remove('shadow-lg');
+        }
+      }
+    });
   </script>
 {% endif %}
 
