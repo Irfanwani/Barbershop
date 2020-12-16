@@ -99,7 +99,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'barberapp:apnt_details' ap_id=1 %}">My appointments</a>
+              <a class="nav-link" href="{% url 'barberapp:apnt_details' ap_id=1 %}">My appointments <span id="apnt_badge" class="badge badge-primary"></span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'account_email' %}">Change E-mail</a>
@@ -194,12 +194,29 @@
       }
     });
   </script>
+{% else %}
+<script>
+  // Styling the carousel-caption for portrait devices
+  if(window.innerHeight > window.innerWidth) {
+    document.getElementById("carouselExampleCaptions").classList.add('carousel-fade');
+  }
+
+  // Styling the info-cards
+  document.querySelectorAll('.col-lg-4').forEach(col => {
+    col.onmouseover = () => {
+    col.classList.add('shadow-lg');
+  }
+  col.onmouseout = () => {
+    col.classList.remove("shadow-lg");
+  }
+  });
+
+</script>
 {% endif %}
 
 <script>
   // Styling the carousel-caption for portrait devices
   if(window.innerHeight > window.innerWidth) {
-    document.getElementById("carouselExampleCaptions").classList.add('carousel-fade');
     styling();
   }
 
@@ -212,19 +229,17 @@
     })
   }
 
-  // Styling the info-cards
-  document.querySelectorAll('.col-lg-4').forEach(col => {
-    col.onmouseover = () => {
-      col.classList.add('shadow-lg');
-    }
-    col.onmouseout = () => {
-      col.classList.remove("shadow-lg");
-    }
-  });
-
   window.onload = () => {
     // Styling the container_div as per the navbar
     document.getElementById('container_div').style.marginTop = `${document.getElementById("navbar").offsetHeight}px`;
+    
+    // Animating the messages(fade-show)
+    if(document.getElementById("msg_al")) {
+    setTimeout(function(){
+      document.getElementById("msg_al").style.width = '0%';
+      document.getElementById("msg_al").style.height = '0%';
+    }, 5001);
+  };
   }
 
   // Styling the error messages
@@ -234,14 +249,6 @@
   document.querySelectorAll(".errorlist").forEach(err => {
     err.classList.add('alert-danger');
   });
-
-  // Animating the messages(fade-show)
-  if(document.getElementById("msg_al")) {
-    setTimeout(function(){
-      document.getElementById("msg_al").style.width = '0%';
-      document.getElementById("msg_al").style.height = '0%';
-    }, 5001);
-  };
 
   // Styling all the cards
   document.querySelectorAll(".card").forEach(card => {
