@@ -167,6 +167,7 @@ document.querySelector("#access_location").onclick = function() {
             });
             
         },
+        error => console.log("error"),
         {
             enableHighAccuracy: true,
         })

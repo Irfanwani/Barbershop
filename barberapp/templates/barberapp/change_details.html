@@ -172,6 +172,7 @@ document.getElementById("access_my_location").onclick = () => {
                  console.log(error);
              });
         },
+        error => console.log("error"),
         {
             enableHighAccuracy: true,
         })
