@@ -99,7 +99,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'barberapp:apnt_details' ap_id=1 %}">My appointments <span id="apnt_badge" class="badge badge-primary"></span></a>
+              <a class="nav-link" href="{% url 'barberapp:apnt_details' ap_id=1 %}">My appointments <span id="apnt_badge" class="badge badge-primary">{{ apnt_count }}</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'account_email' %}">Change E-mail</a>
