@@ -41,10 +41,10 @@ def index(request):
                 dt = ap.datetime
                 t2 = dt.strftime('%d/%m/%Y, %H:%M:%S')
                 t23 = datetime.strptime(t2, '%d/%m/%Y, %H:%M:%S')
-                if t23 <= t12 - timedelta(minutes=3):
+                if t23 <= t12 - timedelta(minutes=1):
                     exp_br = True
                     ap.delete()
-            print(exp_br)
+           
             #Getting nearby barbers.
             try:
                 usr = userAddress.objects.get(username=request.user.username)
@@ -86,7 +86,7 @@ def index(request):
                     "usr": usr,
                     "barbers": barbers,
                     "result": result,
-                    'exp_br': exp_br
+                    "exp_br": exp_br,
                 }
 
             if request.is_ajax():
@@ -101,7 +101,7 @@ def index(request):
 
             return render(request, "barberapp/index.html", context=ctx)
         except:
-            result = f'Please Provide your address details to check barbers around you. In the top right corner goto: {request.user.username} >> Profile and submit your address details there!'
+            result = "Please Provide your address details to check barbers around you. Goto 'Profile' and submit your address details there!"
             return render(request, "barberapp/index.html", {"result": result})
 
     return render(request, "barberapp/index.html")
