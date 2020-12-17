@@ -44,7 +44,7 @@ def index(request):
                 if t23 <= t12 - timedelta(minutes=3):
                     exp_br = True
                     ap.delete()
-
+            print(exp_br)
             #Getting nearby barbers.
             try:
                 usr = userAddress.objects.get(username=request.user.username)
