@@ -171,6 +171,9 @@ document.getElementById("access_my_location").onclick = () => {
              .catch(function(error) {
                  console.log(error);
              });
+        },
+        {
+            enableHighAccuracy: true,
         })
     }else {
         console.log("error")

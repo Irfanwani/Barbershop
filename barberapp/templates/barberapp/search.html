@@ -1,6 +1,9 @@
 <div id="all_barbers">
 <div>
     {% if brbrs %}
+    <script>
+        document.getElementById("barber_count").innerHTML = '{{ brbrs|length }}';
+    </script>
     {% for brbr in brbrs %}
     <div style="display: grid; grid-template-columns: 2fr 0fr; justify-content: space-between;">
 
@@ -33,6 +36,9 @@
     <br>
     {% endfor %}
     {% else %}
+    <script>
+        document.getElementById("barber_count").innerHTML = 0;
+    </script>
     <p>{{ result }}</p>
     {% endif %}
 </div>
