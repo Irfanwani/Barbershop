@@ -197,9 +197,10 @@
 {% else %}
 <script>
   // Styling the carousel-caption for portrait devices
-  if(window.location.pathname == '/') {
     if(window.innerHeight > window.innerWidth ) {
-      document.getElementById("carouselExampleCaptions").classList.add('carousel-fade');
+      if(document.getElementById("carouselExampleCaptions")) {
+        document.getElementById("carouselExampleCaptions").classList.add('carousel-fade');
+      }
     }
     
     // Styling the info-cards
@@ -211,7 +212,6 @@
         col.classList.remove("shadow-lg");
       }
     });
-  }
 
 </script>
 {% endif %}

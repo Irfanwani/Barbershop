@@ -200,7 +200,7 @@
 </div>
 
 <!-- Showing a popup when some appointments are expired -->
-<!-- {% if exp_br %} -->
+{% if exp_br %}
 <button id="exp_msg_trigger" hidden type="button" data-toggle="modal" data-target="#exp_msg">
     expiration alert
 </button>
@@ -229,7 +229,7 @@
         }, 5000);
     };
 </script>
-<!-- {% endif %} -->
+{% endif %}
 
 <script>
 document.getElementById("container_div").classList.remove("container");
