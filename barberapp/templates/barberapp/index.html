@@ -96,6 +96,38 @@
 
 <div id="barber_locations"></div>
 
+<!-- Showing a popup when some appointments are expired -->
+{% if exp_br %}
+<button id="exp_msg_trigger" hidden type="button" data-toggle="modal" data-target="#exp_msg">
+    expiration alert
+</button>
+
+<div class="modal fade" id="exp_msg" tabindex="-1" aria-labelledby="exp_msg_title" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exp_msg_title">Appointments Expired!</h5>
+        <button id="exp_msg_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            Expired appointments are removed automatically after 1 hour of expiration.Hope you got them!
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        document.getElementById("exp_msg_trigger").click();
+        setTimeout(function() {
+            document.getElementById("exp_msg_close").click();
+        }, 5000);
+    };
+</script>
+{% endif %}
+
 {% else %}
 <header>
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -198,38 +230,6 @@
     </ul>
     {% endfor %}
 </div>
-
-<!-- Showing a popup when some appointments are expired -->
-{% if exp_br %}
-<button id="exp_msg_trigger" hidden type="button" data-toggle="modal" data-target="#exp_msg">
-    expiration alert
-</button>
-
-<div class="modal fade" id="exp_msg" tabindex="-1" aria-labelledby="exp_msg_title" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exp_msg_title">Appointments Expired!</h5>
-        <button id="exp_msg_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-            Expired appointments are removed automatically after 1 hour of expiration.Hope you got them!
-        </div>
-    </div>
-    </div>
-</div>
-
-<script>
-    window.onload = () => {
-        document.getElementById("exp_msg_trigger").click();
-        setTimeout(function() {
-            document.getElementById("exp_msg_close").click();
-        }, 5000);
-    };
-</script>
-{% endif %}
 
 <script>
 document.getElementById("container_div").classList.remove("container");
