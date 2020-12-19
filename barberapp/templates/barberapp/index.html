@@ -128,7 +128,7 @@
 </script>
 {% endif %}
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button id="mb" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
     Launch demo modal
   </button>
   
@@ -146,12 +146,20 @@
           ...
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="cl" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    window.onload = () => {
+        document.getElementById("mb").click();
+        setTimeout(function() {
+            document.getElementById("cl").click();
+        }, 5000);
+    };
+</script>
 {% else %}
 <header>
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
