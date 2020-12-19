@@ -41,12 +41,9 @@ def index(request):
                 dt = ap.datetime
                 t2 = dt.strftime('%d/%m/%Y, %H:%M:%S')
                 t23 = datetime.strptime(t2, '%d/%m/%Y, %H:%M:%S')
-                try:
-                    t23 <= t12 - timedelta(minutes=1)
+                if t23 <= t12 - timedelta(minutes=1):
                     exp_br = True
                     ap.delete()
-                except:
-                    pass
            
             #Getting nearby barbers.
             try:
