@@ -11,11 +11,13 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail, send_mass_mail
 from django.template.loader import render_to_string
 from django.db.models import Q
-from geopy.distance import geodesic 
+from geopy.distance import geodesic
+import pytz
 
 
 # Create your views here.
 def index(request):
+    mytz = pytz.timezone('Asia/Kolkata')
     if request.user.is_authenticated:
         try:
             barbers = barberAddress.objects.all()
@@ -32,7 +34,7 @@ def index(request):
                 usr1 = barberAddress.objects.get(username=request.user.username)
                 apnt = appointmentDetails.objects.filter(Q(barbername=request.user.username) | Q(username=request.user.username))
 
-            now = datetime.now()
+            now = datetime.now(mytz)
             t1 = now.strftime("%d/%m/%Y, %H:%M:%S")
             t12 = datetime.strptime(t1, '%d/%m/%Y, %H:%M:%S')
 
@@ -149,6 +151,7 @@ def address(request):
 
 @login_required(login_url="/accounts/login")
 def appointment(request, barber_id):
+    mytz = pytz.timezone('Asia/Kolkata')
     brbr = barberAddress.objects.get(id=barber_id)
     bbr = User.objects.get(username=brbr.username)
 
@@ -161,7 +164,7 @@ def appointment(request, barber_id):
         
         if form.is_valid():
             #getting the current datetime and convert it into another format
-            now = datetime.now()
+            now = datetime.now(mytz)
             t1 = now.strftime("%d/%m/%Y, %H:%M:%S")
             t12 = datetime.strptime(t1, '%d/%m/%Y, %H:%M:%S')
 
